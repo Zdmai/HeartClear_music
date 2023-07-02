@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+	<style type="text/css">
+			::selection {
+				color: #fff;
+				background: #9B0909;
+			}
+
+			* {
+				margin: 0px;
+				padding: 0px;
+				list-style: none;
+			}
+
+			a {
+				text-decoration: none;
+				color: #000000;
+			}
+
+			hr {
+				height: 1.1px;
+			}
+
+			/* 隐藏 */
+			.notShow {
+				display: none;
+			}
+
+			/* 头部一级菜单被选中 */
+			.topCheck:hover {
+				background: #000;
+			}
+
+			/* 头部二级菜单被选中 */
+			.topItemCheck:hover {
+				background: #9B0909;
+			}
+
+			/* 头部css */
+			#top {
+				margin: 0 auto;
+				width: 100%;
+				height: 70px;
+				background: #242424;
+				margin-bottom: 5px;
+			}
+
+			/* 登录 */
+			.m_login {
+				right: 180px;
+			}
+
+			/* 退出登录 */
+			.m_login2 {
+				display: none;
+				color: white;
+				top: 50px;
+				z-index: 100;
+				right: 170px;
+				width: 60px;
+				line-height: 50px;
+				height: 50px;
+				background-color: red;
+			}
+
+			.m_login2 {
+				color: white;
+				background-color: black;
+				z-index: 101;
+			}
+
+			.m_login:hover {
+				color: #fff;
+			}
+
+			#spanTip {
+				color: white;
+				/* background-color: black; */
+				z-index: 100;
+				position: absolute;
+				right: 10px;
+			}
+
+
+			/* 登录之后的图片 */
+			.m_img {
+				right: 60px;
+			}
+
+			.user {
+				width: 40px;
+				height: 40px;
+				margin: auto;
+				margin-left: -10px;
+				border-radius: 40px;
+				/* 设置图片平铺 */
+				object-fit: initial;
+			}
+
+			/* logo */
+			.logo {
+				margin-left: 10%;
+				margin-right: 5%;
+				line-height: 70px;
+				font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+				font-size: 25pt;
+				color: rgb(255, 255, 255);
+				text-shadow: rgb(255, 255, 255) 0px 0px 10px, rgb(255, 255, 255) 0px 0px 50px, rgb(194, 12, 12) 0px 0px 10px, rgb(194, 12, 12) 0px 0px 20px, rgb(194, 12, 12) 0px 0px 30px, rgb(194, 12, 12) 0px 0px 30px, rgb(194, 12, 12) 0px 0px 50px;
+				/* transition:all 0.8s;
+				*/
+				cursor: pointer;
+			}
+
+			/* 一级菜单 */
+			.m_top {
+				display: flex;
+				line-height: 70px;
+				position: relative;
+			}
+
+			.m_top>a {
+				position: absolute;
+				color: #ccc;
+				right: 70px;
+				width: 150px;
+				text-align: center;
+				/* border: 1px solid yellow; */
+				overflow: hidden;
+				font-size: 0.9em;
+			}
+
+			/* 创作者中心 */
+			.m_content {
+				right: 280px;
+			}
+
+			.m_content:hover {
+				color: #FFFFFF;
+			}
+
+			/* 输入框背景 */
+			.m_input {
+				width: 210px;
+				height: 33px;
+				background: #FFFFFF;
+				margin: auto;
+				position: absolute;
+				right: 240px;
+				top: 20px;
+				line-height: 30px;
+				border-radius: 30px;
+				/* display: none; */
+			}
+
+			/* .m_input input:-internal-autofill-selected {
+			  background: transparent !important;
+			} */
+
+			/* 搜索图片 */
+			.m_input img {
+				width: 18px;
+				position: absolute;
+				margin-top: 8px;
+				margin-left: 10px;
+			}
+
+			/* 输入框 */
+			.m_input input {
+				position: absolute;
+				margin-top: 4px;
+				margin-left: 33px;
+				border: 0;
+				outline: none;
+				width: 150px;
+				height: 25px;
+			}
+
+			.userPhoto {
+				position: absolute;
+				right: 65px;
+			}
+
+			.layui-nav-bar {
+				background-color: transparent;
+			}
+
+
+			/* 第一个ul菜单 */
+			.menu1 {
+				height: 70px;
+				width: 40%;
+				text-align: center;
+				margin-left: -50px;
+			}
+
+			.menu1>li {
+				float: left;
+				transition: all 0.5s;
+				width: 25%;
+				flex-grow: 1;
+			}
+
+			.menu1 a {
+				color: #ccc;
+				display: inline-block;
+				width: 100%;
+				height: 100%;
+				transition: all 0.5s;
+
+			}
+
+		</style>
+</head>
+<body>
+<div id="top">
+				<div class="m_top">
+					<span class="logo">心晴音乐</span>
+					<ul class="menu1">
+						<li class="topCheck">
+							<a href="javascript:;">首页</a>
+						</li>
+
+						<li class="topCheck">
+							<a href="发现音乐.html">发现音乐</a>
+						</li>
+
+						<li class="topCheck">
+							<a href="javascript:;" id="mymusic">我的音乐</a>
+
+						<li class="topCheck">
+							<a href="动态.html">动态</a>
+						</li>
+					</ul>
+					<div class="m_input">
+						<img src="./img/find.png" />
+						<input id="find" type="text" placeholder="音乐" autocomplete="off" />
+					</div>
+					<a href="login.html" class="m_login" id="m_login" title="点击跳转">登录</a>
+					<a href="login.html" class="m_login2" id="m_login2">退出登录</a>
+
+				</div>
+				<div class="m_back">
+</body>
+</html>
