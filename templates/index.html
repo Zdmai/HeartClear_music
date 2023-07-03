@@ -1,0 +1,1636 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>心晴</title>
+		<style type="text/css">
+			/* <!-- 公共css --> */
+			::selection {
+				color: #fff;
+				background: #9B0909;
+			}
+
+			* {
+				margin: 0px;
+				padding: 0px;
+				list-style: none;
+			}
+
+			a {
+				text-decoration: none;
+				color: #000000;
+			}
+
+			hr {
+				height: 1.1px;
+			}
+
+			/* 隐藏 */
+			.notShow {
+				display: none;
+			}
+
+			/* 头部一级菜单被选中 */
+			.topCheck:hover {
+				background: #000;
+			}
+
+			/* 头部二级菜单被选中 */
+			.topItemCheck:hover {
+				background: #9B0909;
+			}
+
+			/* 头部css */
+			#top {
+				margin: 0 auto;
+				width: 100%;
+				height: 70px;
+				background: #242424;
+				margin-bottom: 5px;
+			}
+
+			/* 登录 */
+			.m_login {
+				right: 180px;
+			}
+
+			/* 退出登录 */
+			.m_login2 {
+				display: none;
+				color: white;
+				top: 50px;
+				z-index: 100;
+				right: 170px;
+				width: 60px;
+				line-height: 50px;
+				height: 50px;
+				background-color: red;
+			}
+
+			.m_login2 {
+				color: white;
+				background-color: black;
+				z-index: 101;
+			}
+
+			.m_login:hover {
+				color: #fff;
+			}
+
+			#spanTip {
+				color: white;
+				/* background-color: black; */
+				z-index: 100;
+				position: absolute;
+				right: 10px;
+			}
+
+
+			/* 登录之后的图片 */
+			.m_img {
+				right: 60px;
+			}
+
+			.user {
+				width: 40px;
+				height: 40px;
+				margin: auto;
+				margin-left: -10px;
+				border-radius: 40px;
+				/* 设置图片平铺 */
+				object-fit: initial;
+			}
+
+			/* logo */
+			.logo {
+				margin-left: 10%;
+				margin-right: 5%;
+				line-height: 70px;
+				font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+				font-size: 25pt;
+				color: rgb(255, 255, 255);
+				text-shadow: rgb(255, 255, 255) 0px 0px 10px, rgb(255, 255, 255) 0px 0px 50px, rgb(194, 12, 12) 0px 0px 10px, rgb(194, 12, 12) 0px 0px 20px, rgb(194, 12, 12) 0px 0px 30px, rgb(194, 12, 12) 0px 0px 30px, rgb(194, 12, 12) 0px 0px 50px;
+				/* transition:all 0.8s;
+				*/
+				cursor: pointer;
+			}
+
+			/* 一级菜单 */
+			.m_top {
+				display: flex;
+				line-height: 70px;
+				position: relative;
+			}
+
+			.m_top>a {
+				position: absolute;
+				color: #ccc;
+				right: 70px;
+				width: 150px;
+				text-align: center;
+				/* border: 1px solid yellow; */
+				overflow: hidden;
+				font-size: 0.9em;
+			}
+
+			/* 创作者中心 */
+			.m_content {
+				right: 280px;
+			}
+
+			.m_content:hover {
+				color: #FFFFFF;
+			}
+
+			/* 输入框背景 */
+			.m_input {
+				width: 210px;
+				height: 33px;
+				background: #FFFFFF;
+				margin: auto;
+				position: absolute;
+				right: 240px;
+				top: 20px;
+				line-height: 30px;
+				border-radius: 30px;
+				/* display: none; */
+			}
+
+			/* .m_input input:-internal-autofill-selected {
+			  background: transparent !important;
+			} */
+
+			/* 搜索图片 */
+			.m_input img {
+				width: 18px;
+				position: absolute;
+				margin-top: 8px;
+				margin-left: 10px;
+			}
+
+			/* 输入框 */
+			.m_input input {
+				position: absolute;
+				margin-top: 4px;
+				margin-left: 33px;
+				border: 0;
+				outline: none;
+				width: 150px;
+				height: 25px;
+			}
+
+			.userPhoto {
+				position: absolute;
+				right: 65px;
+			}
+
+			.layui-nav-bar {
+				background-color: transparent;
+			}
+
+
+			/* 第一个ul菜单 */
+			.menu1 {
+				height: 70px;
+				width: 40%;
+				text-align: center;
+				margin-left: -50px;
+			}
+
+			.menu1>li {
+				float: left;
+				transition: all 0.5s;
+				width: 25%;
+				flex-grow: 1;
+			}
+
+			.menu1 a {
+				color: #ccc;
+				display: inline-block;
+				width: 100%;
+				height: 100%;
+				transition: all 0.5s;
+
+			}
+
+			/* 鼠标移入事件 menu菜单li */
+			.menu1>li:hover {
+				background: #000000;
+				transition: all 0.5s;
+			}
+
+			.menu1>li:hover a {
+				color: #fff;
+				transition: all 0.5s;
+			}
+
+			/* 头部红色横条 */
+			.m_back {
+				width: 100%;
+				height: 5px;
+				background: #C20C0C;
+			}
+
+			/* 发现音乐的二级菜单 首页被显示 其他页面被隐藏 */
+			.menu2 {
+				display: flex;
+				height: 30px;
+				background: #C20C0C;
+				margin-bottom: 30px;
+				padding-left: 30%;
+				line-height: 23px;
+				position: relative;
+				width: 70%;
+				z-index: 1;
+			}
+
+			.menu2 li {
+				padding: 0 30px;
+			}
+
+			.menu2 li>a {
+				padding: 3px 15px;
+				border-radius: 10px;
+				font-size: 0.85em;
+				color: #FFFFFF;
+				transition: all 0.5s;
+			}
+
+			.menu2 li>a:hover {
+				background: #9B0909;
+				transition: all 0.2s;
+			}
+
+			/* <!-- 底部版权 --> */
+			#bottom {
+				font-size: 0.9em;
+				position: relative;
+				bottom: 0;
+				height: 200px;
+				margin-top: 50px;
+				color: #fff;
+				background-color: #393D49;
+			}
+
+			#bottom .fl {
+				float: left;
+				margin: 60px 0 0 20%;
+			}
+
+			#bottom .fl p {
+				line-height: 30px;
+			}
+
+			#bottom .fl p .comm {
+				margin-left: 20px;
+			}
+
+			#bottom .fl a {
+				color: #ddd;
+			}
+
+			#bottom .fl a:hover {
+				color: #fff;
+				text-decoration: underline #fff;
+			}
+
+			#bottom .fr {
+				float: right;
+				margin: 30px 22% 0 0;
+			}
+
+			#bottom .fr ul li {
+				line-height: 30px;
+				color: #ddd;
+			}
+
+			#bottom .fr ul li:hover {
+				cursor: pointer;
+				color: #fff;
+				text-decoration: underline #fff;
+			}
+
+			/* 底部播放区 重点！！！！！ */
+			#head {
+				position: fixed;
+				bottom: 0px;
+				width: 100%;
+				text-align: right;
+			}
+
+			#head>img {
+				height: 20px;
+				margin-right: 50px;
+			}
+
+			/* 播放区域 */
+			#wrap {
+				/* opacity:0.9; */
+				/* position: fixed; */
+				bottom: -55px;
+				height: 55px;
+				width: 100%;
+				background: rgb(36, 36, 36, 0.9);
+				box-shadow: 0px -3px 5px rgb(36, 36, 36, 0.9);
+				/* 文字不被选中 */
+				-webkit-user-select: none;
+				-moz-user-select: none;
+				-ms-user-select: none;
+				user-select: none;
+			}
+
+			/* 按钮的样式 暂停 播放 进度条 头像 下一曲啥的 */
+			/* 按钮的大致布局 */
+			.play_left {
+				position: absolute;
+				left: 150px;
+			}
+
+			.play_left img {
+				opacity: 0.7;
+			}
+
+			.play_right {
+				position: absolute;
+				right: 50px;
+			}
+
+			.play_right img {
+				opacity: 0.7;
+			}
+
+			.t_10 {
+				position: relative;
+				top: 18px;
+				width: 20px;
+				margin: 0 10px;
+			}
+
+			.t_20 {
+				position: relative;
+				width: 35px;
+			}
+
+			.t_30 {
+				position: relative;
+				top: 2px;
+				width: 50px;
+			}
+
+			/* 进度条啥的 小细节 */
+			#SongList {
+				height: 280px;
+				width: 350px;
+				background: #000;
+				z-index: 9;
+				position: fixed;
+				bottom: 55px;
+				right: 60px;
+				overflow-y: auto;
+				display: none;
+				text-align: left;
+				color: #C2C2C2;
+				font-size: 0.9em;
+			}
+
+			#SongList ul {
+				/* background:#9B0909;
+				*/
+				margin-left: 10px;
+			}
+
+			#SongList ul li {
+				margin: 2px;
+				cursor: pointer;
+			}
+
+			#SongList ul li:hover {
+				color: #fff;
+			}
+
+			#p2 {
+				display: none;
+			}
+
+			#p1,
+			#p2 {
+				opacity: 1;
+			}
+
+			#wrap img:hover {
+				opacity: 1;
+			}
+
+			.SongInfo {
+				position: absolute;
+				left: 350px;
+			}
+
+			.SongInfo a {
+				color: #FFFFFF;
+				font-size: 0.8em;
+			}
+
+			.song {
+				position: relative;
+				top: -20px;
+
+				margin-left: 20px;
+				left: 20px;
+
+			}
+
+			.singer {
+				position: relative;
+				top: -20px;
+				margin-left: 20px;
+			}
+
+			.singer a {
+				color: #CCCCCC;
+			}
+
+			.jinDuTiao {
+				position: absolute;
+				top: 30px;
+				left: 60px;
+				width: 600px;
+				height: 20px;
+				/* background:#fff;
+				*/
+			}
+
+			.jinDuTiao .JinDu {
+				width: 100%;
+				height: 10px;
+				background: #000000;
+				border-radius: 55px;
+				box-shadow: inset 0px -1px 1px #717171;
+			}
+
+			.JinDu .progress {
+				width: 0%;
+				height: 100%;
+				border-radius: 5px;
+				background-color: #9B0909;
+				box-shadow: inset 0px -1px 1px #000;
+			}
+
+			.jinDuTiao .YuanDian {
+				position: absolute;
+				width: 15px;
+				height: 15px;
+				border-radius: 15px;
+				background: #F5F5F5;
+				top: -2px;
+				background-image: radial-gradient(circle, #f00, #fff, #fff);
+			}
+
+			.songTime {
+				position: absolute;
+				left: 685px;
+				top: 25px;
+				color: #CCCCCC;
+				font-family: "bodoni mt";
+				width: 100px;
+			}
+
+			.songTime span:nth-of-type(2) {
+				color: #717171;
+			}
+
+			.songImg {
+				position: relative;
+				top: 6px;
+				border-radius: 5px;
+				/* border:1px solid #000000;
+				*/
+				box-shadow: 2px #000000;
+				border-radius: 5px;
+				width: 40px;
+				height: 40px;
+			}
+
+			/* 音量的位置 */
+			#volume {
+				position: absolute;
+				bottom: 20px;
+				/* margin-left: 38px; */
+				display: none;
+				width: 20px;
+				background-color: rgb(46, 44, 46, 0.8);
+				padding: 10px;
+				padding-top: 15px;
+			}
+
+			.layui-slider-vertical {
+				margin: auto;
+			}
+
+			/* 滚动条样式 */
+			#SongList::-webkit-scrollbar {
+				width: 5px;
+				/* height: 10px; */
+				border-radius: 10px;
+			}
+
+			#SongList::-webkit-scrollbar-button,
+			#SongList::-webkit-scrollbar-button:vertical {
+				display: none;
+			}
+
+			#SongList::-webkit-scrollbar-track,
+			#SongList::-webkit-scrollbar-track:vertical {
+				border-radius: 5px;
+			}
+
+			#SongList::-webkit-scrollbar-track-piece {
+				background-color: rgba(48, 48, 48, 0.9);
+				box-shadow: inset 0 0 2px #717171;
+				border-radius: 5px;
+			}
+
+			#SongList::-webkit-scrollbar-thumb,
+			#SongList::-webkit-scrollbar-thumb:vertical {
+				border-radius: 10px;
+				/* -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,1); */
+				box-shadow: inset 0 0 1px #717171;
+				background-color: #c20c0c;
+			}
+
+			#SongList::-webkit-scrollbar-thumb:hover,
+			#SongList::-webkit-scrollbar-thumb:vertical:hover {
+				background: #c20c0ce5;
+			}
+
+			table {
+				width: 100%;
+				margin: 10px auto;
+				border-collapse: collapse;
+				text-align: center;
+			}
+
+			th {
+				background-color: #C20C0C;
+				color: #fff;
+			}
+
+			td,
+			th {
+				border: 1px solid #333;
+
+			}
+
+			td>a {
+				color: #0000FF;
+			}
+
+			thead tr {
+				height: 40px;
+				background-color: #cccccc;
+			}
+
+			/* ========================== */
+			@media screen and (max-width: 400px) {
+				.left {
+					display: none;
+				}
+
+				.right {
+					display: none;
+				}
+
+				.con_gengduo {
+					display: none;
+				}
+			}
+
+			#content {
+				background: #f5f5f5;
+				background: black;
+			}
+
+			.con_banner {
+				background: #242424;
+			}
+
+			/* asdadas */
+			.title {
+				width: 95%;
+				margin: 0 auto;
+				font-size: 1.2em;
+				border-bottom: 3px #c20c0c solid;
+				padding: 15px;
+			}
+
+			.title .t-span {
+				position: relative;
+				/* top: 15px; */
+			}
+
+			.title>img {
+				object-fit: initial;
+				position: relative;
+				top: 8px;
+				padding: 0 10px;
+				width: 30px;
+				left: 20px;
+				margin-right: 15px;
+			}
+
+			/* 热门推荐的几个歌曲类型 */
+
+			.title .con_type {
+				font-size: 0.8em;
+				margin-left: 30px;
+			}
+
+			.title .con_type a:hover {
+				color: #9b0909;
+				text-decoration: underline;
+			}
+
+			/* 更多按钮 */
+
+			.con_gengduo {
+				font-size: 0.7em;
+				position: absolute;
+				right: 300px;
+				margin-top: 22px;
+			}
+
+			/* 更多按钮的a标签悬浮添加下划线 */
+
+			.con_gengduo a:hover {
+				color: #000;
+				text-decoration: underline;
+			}
+
+			.middiv {
+				background-color: #f5f5f5;
+			}
+
+			/* 热门推荐  个性  排行  歌单 */
+			.remen,
+			.gexing,
+			.paihang,
+			.gedan {
+				width: 70%;
+				margin: 0 auto;
+				background: #fff;
+			}
+
+			/* 歌曲列表ul */
+
+			.ul_list {
+				display: flex;
+				flex-flow: wrap;
+				margin: 0 auto;
+				margin-left: 70px;
+			}
+
+			.ul_list li {
+				margin: 15px 15px;
+			}
+
+			.ul_list li a {
+				font-size: 0.9em;
+				display: block;
+				width: 150px;
+				word-wrap: break-word;
+			}
+
+			.ul_list li:hover a {
+				text-decoration: underline;
+				color: #9b0909;
+			}
+
+			.ul_list img {
+				width: 150px;
+				height: 150px;
+				min-width: 150px;
+			}
+
+			/* ======================================================= */
+
+			/*设置轮播图的边框相对定位*/
+			.play-box {
+				position: relative;
+				width: 60%;
+				/* height: 400px; */
+				margin: 0 auto;
+				/* border: 1px solid yellow; */
+			}
+
+
+			/*设置边框下的图片*/
+			.play-box img {
+				width: 100%;
+			}
+
+			/*设置所有图片不显示*/
+			.play-box img {
+				display: block;
+				/*现在是文本状态，要修改为块状*/
+				overflow: hidden;
+				/*隐藏超过边框高度的图片*/
+				opacity: 0;
+				/*默认图片为全透明*/
+				height: 0;
+				/*默认高度为0*/
+				transition: opacity .5s;
+				/*默认透明度过渡时间为0.5s*/
+			}
+
+			/*设置当前图片显示*/
+			#imgList .current {
+				opacity: 1;
+				/*默认图片显示*/
+				height: auto;
+				/*默认高度为自动*/
+			}
+
+			/*设置列表ul*/
+			.iconList ul {
+				margin: 0;
+				padding: 0;
+				list-style: none;
+			}
+
+			/*设置列表ul下的li*/
+			.iconList ul li {
+				width: 10px;
+				height: 10px;
+				margin: 0 4px;
+				font-size: 0;
+				border-radius: 50%;
+				background-color: #fff;
+				cursor: pointer;
+				float: left;
+			}
+
+			/*当图片变化时，图标也跟着变化*/
+			.iconList ul li.current {
+				background-color: red;
+			}
+
+			/*设置图标绝对定位*/
+			.iconList {
+				position: absolute;
+				bottom: 10px;
+				left: 50%;
+				margin-left: -45px;
+			}
+
+			/*设置向左向右图标*/
+			.sliderbar {
+				position: absolute;
+				top: 37%;
+				width: 60px;
+				height: 100px;
+				font-family: simsun;
+				color: #fff;
+				text-align: center;
+				line-height: 90px;
+				background-color: #000;
+				opacity: .6;
+				display: none;
+				cursor: pointer;
+			}
+
+			/*设置向左图标*/
+			.slidebar-left {
+				left: 0
+			}
+
+			/*设置向右图标*/
+			.slidebar-right {
+				right: 0;
+			}
+		</style>
+		<script type="text/javascript">
+			window.onload = function() {
+				//设置变量速度为3秒
+				var speed = 3000;
+				//循环变量为1，是避免定时器再等第一章图片
+				var m = 1;
+				//设置定时器的函数和时间
+				var playTimer = setInterval(runPlay, speed);
+				//定时函数
+				function runPlay() {
+					//判读如果m大于4，就设置m=0
+					if (m > 4) {
+						m = 0;
+					}
+					//调用controlPlay函数来控制图片变化
+					controlPlay(m);
+					m++;
+				}
+				//通过参数控制图片的变化,图标变化
+				function controlPlay(n) {
+					var img = document.getElementById("imgList").getElementsByTagName("img");
+					for (var i = 0; i < img.length; i++) {
+						img[i].classList.remove("current");
+					}
+					img[n].classList.add("current");
+
+					var li = document.getElementById("iconul").getElementsByTagName("li");
+					for (var i = 0; i < li.length; i++) {
+						li[i].classList.remove("current");
+					}
+					li[n].classList.add("current");
+
+				}
+
+				//获取登录链接和推出登录链接
+				var playBox = document.getElementById("playBox")
+				var playBoxl = document.getElementById("sliderbarl")
+				var playBoxr = document.getElementById("sliderbarr")
+				//控制登录链接按钮，和推出按钮的显示和隐藏
+				playBox.onmouseover = function() {
+					//停止定时
+					clearInterval(playTimer);
+					//左右控制按钮显示
+					playBoxl.style.display = 'block'
+					playBoxr.style.display = 'block'
+
+				}
+				playBoxl.onmouseover = function() {
+					playBoxl.style.display = 'block'
+					playBoxr.style.display = 'block'
+				}
+				playBoxr.onmouseover = function() {
+					playBoxl.style.display = 'block'
+					playBoxr.style.display = 'block'
+				}
+				playBoxl.onmouseout = function() {
+					playBoxl.style.display = 'none'
+					playBoxr.style.display = 'none'
+				}
+				playBoxr.onmouseout = function() {
+					playBoxl.style.display = 'none'
+					playBoxr.style.display = 'none'
+				}
+				playBox.onmouseout = function() {
+					//重新开始定时
+					playTimer = setInterval(runPlay, speed);
+					//左右控制按钮隐藏
+					playBoxl.style.display = 'none'
+					playBoxr.style.display = 'none'
+				}
+
+				var iconli = document.getElementsByClassName("current2");
+				for (var i = 0; i < iconli.length; i++) {
+					iconli[i].onclick = function(n) {
+						return function() {
+							controlPlay(n);
+							m = n + 1;
+						}
+					}(i)
+				}
+
+				//下一张图片
+				playBoxr.onclick = function() {
+					//判断m的值
+					if (m > 4) {
+						m = 0;
+					}
+					//显示下一站图片
+					controlPlay(m);
+					m++;
+				}
+
+				//上一张图片
+				playBoxl.onclick = function() {
+					//m默认显示下一张，所以为了显示上一张，m必须减2
+					m -= 2;
+					if (m < 0) {
+						m = 4;
+					}
+					//显示上一张图片
+					controlPlay(m);
+					//保证m要显示下一张
+					m++;
+				}
+
+				//1,先准备数据
+				var datas = [{
+					song: "可惜没有如果",
+					type: "流行",
+					Album: "1",
+					singer: "林俊杰"
+				}, {
+					song: "Cold",
+					type: "流行",
+					Album: "1",
+					singer: "James Blunt"
+				}, {
+					song: "花海",
+					type: "流行",
+					Album: "1",
+					singer: "周杰伦"
+				}, {
+					song: "真的爱你",
+					type: "流行",
+					Album: "1",
+					singer: "Beyond"
+				}, {
+					song: "雪下的声音",
+					type: "流行",
+					Album: "1",
+					singer: "陆虎"
+				}, {
+					song: "Faded",
+					type: "流行",
+					Album: "1",
+					singer: "Alan Walker"
+				}];
+				//2,往tbody里面创建行，有几个人（通过数组的长度）我们就创建几行
+				var tbody = document.querySelector("tbody");
+				for (var i = 0; i < datas.length; i++) //外面的for循环 是 行tr
+				{
+					var tr = document.createElement("tr");
+					tbody.appendChild(tr);
+					//3,往tr每一行里面创建单元格（跟数据有关系的3个单元格），td单元格的数量取决于每个对象的属性个数 for循环遍历对象 datas[i]
+					for (var k in datas[i]) //里面的for循环是 列
+					{
+						var td = document.createElement("td"); //创建单元格
+						tr.appendChild(td);
+						td.innerHTML = datas[i][k]; //把对象里面的属性值 datas[i][k]给td
+					}
+					//4，创建有删除二字的单元格
+					var td = document.createElement("td");
+					tr.appendChild(td);
+					td.innerHTML = "<a href='javascript:;' class='aa' >删除</a>";
+				}
+
+				//5,删除操作
+				var as = document.getElementsByClassName("aa");
+				for (var i = 0; i < as.length; i++) {
+					as[i].onclick = function() { //点击a 删除 当前a 所在的行（a链接的爸爸的爸爸）
+						tbody.removeChild(this.parentNode.parentNode);
+					}
+				}
+				var username = getUrlParam("username");
+				//这个变量是控制歌曲的播放状态的
+				//默认0是列表顺序循环播放，1是随机播放，2是单曲循环
+				var brandom = 0;
+				//判断用户是否登录
+				if (username) {
+					//将用户名显示在主页右上角
+					document.getElementById("m_login").text = username
+
+					//获取登录链接和推出登录链接
+					var m_login = document.getElementById("m_login")
+					var m_login2 = document.getElementById("m_login2")
+
+					//控制登录链接按钮，和推出按钮的显示和隐藏
+					m_login.onmouseover = function() {
+						m_login2.style.display = 'block'
+					}
+					m_login.onmouseout = function() {
+						m_login2.style.display = 'none'
+					}
+					m_login2.onmouseover = function() {
+						m_login2.style.display = 'block'
+					}
+					m_login2.onmouseout = function() {
+						m_login2.style.display = 'none'
+					}
+				}
+				//登录信息进行权限设置。
+				document.getElementById("mymusic").onclick = function() {
+					if (!username) {
+						alert("请登录。。。")
+					}
+				}
+
+				// 正式代码
+				//这就是获取播放控件元素。
+				var _audio = document.getElementById("music");
+				//进度条的计时器管理
+				var progressBar = null;
+				var data = { //使用JSON数组
+					//当前播放歌曲索引
+					"index": 0,
+					//歌名
+					"songname": ["London Boy", "海の形", "形容", "杀死那个石家庄人"], //3.44----4.10-----4.29
+					//歌曲图片
+					"cover": ["./img/l.jpg", "./img/xr.jpg", "./img/hdx.jpg", "./img/ssngsjzr.jpg"],
+					//歌手名
+					"singer": ["Taylor Swift", "昙轩", "沈以诚", "万能青年旅店"],
+					//播放控件的文件路径
+					"songsrc": ["./song/London Boy-Taylor Swift.mp3", "./song/海の形-昙轩.mp3",
+						"./song/形容-沈以诚.mp3", "./song/杀死那个石家庄人.mp3"
+					]
+				};
+
+				_audio.src = data.songsrc[data.index];
+				//设置图片封面
+				document.getElementById("Imgsong").src = data.cover[data.index]
+				//设置歌手姓名
+				document.getElementById("singername").text = data.singer[data.index]
+				//设置歌名
+				document.getElementById("songname").text = data.songname[data.index]
+				//当前播放时间的计时器
+				var TimeManager = null;
+				//开始播放
+				document.getElementById("p1").onclick = function() {
+					// console.log("开始播放。。。。");
+					//默认的时候让所有的音频加载，
+					// _audio.load();
+					_audio.autoplay = true; //自动播放
+					_audio.play();
+					duration();
+					//获取播放控件
+					// 开始播放，显示暂停//播放暂停按钮切换
+					document.getElementById("p2").style.display = 'inline'
+					document.getElementById("p1").style.display = 'none'
+				}
+
+				//暂停按钮被单击
+				document.getElementById("p2").onclick = function() {
+					// console.log("暂停中。。。。");
+					// 暂停变播放
+					//播放暂停按钮切换
+					document.getElementById("p1").style.display = 'inline'
+					document.getElementById("p2").style.display = 'none'
+					//暂停
+					_audio.pause();
+					clearInterval(TimeManager);
+				}
+
+				// 播放顺序  p1:列表循环  p2:随机播放  p3:单曲循环
+				// 初始化
+				var p1 = document.getElementById("typep1")
+				var p2 = document.getElementById("typep2")
+				var p3 = document.getElementById("typep3")
+				// 列表循环单击 变随机播放
+				p1.onclick = function() {
+					alert("已切换随机播放");
+					brandom = 1;
+					p1.classList.add("notShow");
+					p2.classList.remove("notShow");
+				}
+				// 随机播放单击 变单曲循环
+				p2.onclick = function() {
+					alert("已切换单曲循环");
+					brandom = 2;
+					p2.classList.add("notShow");
+					p3.classList.remove("notShow");
+					_audio.loop = true;
+					_audio.loop = true;
+				}
+				// 单曲循环单击 变列表循环
+				p3.onclick = function() {
+					alert("已切换列表循环");
+					brandom = 0;
+					p3.classList.add("notShow");
+					p1.classList.remove("notShow");
+					_audio.loop = false;
+				}
+
+				function duration() {
+					// 清除
+					clearInterval(TimeManager);
+					//获取总时长
+					var time = _audio.duration;
+					// console.log("歌曲时间" + time);
+					//分钟
+					var minute = time / 60;
+					// console.log(time);
+					var minutes = parseInt(minute);
+					// console.log(minutes);
+					if (minutes < 10) {
+						minutes = "0" + minutes;
+					}
+					//秒
+					var second = time % 60;
+					var seconds = Math.round(second);
+					if (seconds < 10) {
+						seconds = "0" + seconds;
+					}
+					//总共时长的秒数
+					document.getElementById("totalTime").innerHTML = minutes + ":" + seconds
+					TimeManager = setInterval(function() {
+						timeDisposal(_audio.currentTime);
+					}, 1000);
+				}
+
+				//当前时长的时间处理
+				function timeDisposal(time) {
+					//分钟
+					var minute = time / 60;
+					var minutes = parseInt(minute);
+
+					if (minutes < 10) {
+						minutes = "0" + minutes;
+					}
+					//秒
+					var second = time % 60;
+					var seconds = Math.round(second);
+					if (seconds < 10) {
+						seconds = "0" + seconds;
+					}
+					//当前时长
+					document.getElementById("currentTime").innerHTML = minutes + ":" + seconds
+				}
+				//进度条原点的位置
+				progressBar = setInterval(function() {
+					var bfb = eval(_audio.currentTime / _audio.duration);
+					if (bfb >= 1) {
+						// 大于1就播放下一首
+						down();
+					}
+					// 进度条随着播放向前进 增加宽度百分比  这个 +1 是为了隐藏右边圆角
+					if (bfb > 0.6) {
+						document.getElementById("progress").style.width = bfb * 100 + "%"
+					} else {
+						document.getElementById("progress").style.width = bfb * 100 + 1 + "%"
+					}
+					document.getElementById("YuanDian").style.left = 585 * bfb + "px"
+				}, 1000);
+				//进度条的原点的拖拽
+				var dian = document.getElementById("YuanDian")
+				dian.onmousedown = function() {
+					var X = event.clientX - dian.offsetLeft;
+					var Y = event.clientY - dian.offsetTop;
+
+					document.onmousemove = function() {
+						dian.style.left = event.clientX - X + "px";
+						dian.style.top = event.clientY - Y + "px";
+
+						if (dian.offsetLeft < 0) {
+							dian.style.left = 0 + "px";
+						}
+						if (dian.offsetLeft > 600 - dian.offsetWidth) {
+							dian.style.left = 585 + "px";
+						}
+						if (dian.offsetTop < -2) {
+							dian.style.top = -2 + "px";
+						}
+						if (dian.offsetTop >= 10 - dian.offsetHeight) {
+							dian.style.top = -2 + "px";
+						}
+						var bfb = dian.offsetLeft / 600;
+						if (bfb > 0.6) {
+							document.getElementById("progress").style.width = bfb * 100 + 0.8 + "%"
+						} else {
+							document.getElementById("progress").style.width = bfb * 100 + 1 + "%"
+						}
+					};
+					document.onmouseup = function() {
+						document.onmousemove = null;
+						document.onmouseup = null;
+						// 松开的时候 继续播放
+						_audio.currentTime = eval(
+							(dian.offsetLeft / 600 + 0.01) * _audio.duration
+						);
+						songPlay2();
+					};
+					document.onmouseup = function() {
+						//防止事件混乱，先清空
+						document.onmousemove = null;
+						document.onmouseup = null;
+						// 松开的时候 继续播放
+						_audio.currentTime = eval(
+							(dian.offsetLeft / 600 + 0.01) * _audio.duration
+						);
+						//接着播放
+						songPlay2();
+					};
+				}
+				//这个适用于页面首次加载时播放音乐获取时间
+				function songPlay2() {
+					_audio.autoplay = true; //自动播放
+					// console.log("播放");
+					document.getElementById("p2").style.display = 'inline'
+					document.getElementById("p1").style.display = 'none'
+					duration();
+					_audio.play();
+				}
+				// 进度条的点击
+				document.getElementById("jinDuTiao").onclick = function() {
+					var jdt = document.getElementById("jinDuTiao");
+					var domToLeft = jdt.getBoundingClientRect().left // dom 的左边到视口左边的距离
+					var len = event.clientX - domToLeft;
+					dian.style.left = len + "px";
+					var bfb = len / 600;
+					if (bfb > 0.6) {
+						document.getElementById("progress").style.width = bfb * 100 + 0.8 + "%"
+					} else {
+						document.getElementById("progress").style.width = bfb * 100 + 1 + "%"
+					}
+					// 松开的时候 继续播放
+					_audio.currentTime = eval((bfb + 0.01) * _audio.duration);
+					songPlay2();
+				}
+				// 上一首
+				document.getElementById("up").onclick = function() {
+					// 更换播放路径后播放
+					if (data.index == 0) {
+						data.index = data.songsrc.length - 1
+					} else {
+						data.index--;
+					}
+					_audio.src = data.songsrc[data.index]
+					_audio.load();
+					_audio.oncanplay = function() {
+						// console.log(_audio.duration);
+						duration();
+					}
+					document.getElementById("p2").style.display = 'inline'
+					document.getElementById("p1").style.display = 'none'
+					//设置图片封面
+					document.getElementById("Imgsong").src = data.cover[data.index]
+					//设置歌手姓名
+					document.getElementById("singername").text = data.singer[data.index]
+					//设置歌名
+					document.getElementById("songname").text = data.songname[data.index]
+				}
+
+				// 下一首
+				document.getElementById("down").onclick = down;
+
+				function down() {
+					if (brandom == 0) {
+						// console.log("正常播放");
+						// 更换播放路径后播放
+						if (data.index == (data.songsrc.length - 1)) {
+							data.index = 0
+						} else {
+							data.index++;
+						}
+					} else if (brandom == 1) {
+						// console.log("随机播放");
+						var random = parseInt(Math.random() * (data.songsrc.length), 10);
+						data.index = random;
+
+					} else if (brandom == 2) {
+						// console.log("单曲循环");
+					}
+					// console.log("当前播放歌曲索引" + data.index);
+					document.getElementById("p2").style.display = 'inline'
+					document.getElementById("p1").style.display = 'none'
+					_audio.src = data.songsrc[data.index];
+					_audio.load();
+					_audio.oncanplay = function() {
+						// console.log(_audio.duration);
+						duration();
+					}
+					//设置图片封面
+					document.getElementById("Imgsong").src = data.cover[data.index]
+					//设置歌手姓名
+					document.getElementById("singername").text = data.singer[data.index]
+					//设置	歌名
+					document.getElementById("songname").text = data.songname[data.index]
+				}
+
+				var as = document.getElementsByClassName("lisong");
+				for (var i = 0; i < as.length; i++) {
+					as[i].onclick = function(n) {
+						return function() {
+							if (username) {
+								location.href = "songinfo.html?username=" + username + "&&songindex=" + n;
+							} else {
+								alert("请登录。。")
+							}
+							// console.log(n)
+						}
+					}(i)
+				}
+
+				//这个方法用正则匹配获取url的参数
+				function getUrlParam(name) {
+					//构造一个含有目标参数的正则表达式对象
+					var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+					var url = decodeURI(decodeURI(window.location.search));
+					var r = url.substr(1).match(reg); //匹配目标参数
+					if (r != null) {
+						return unescape(r[2]);
+					} else {
+						return null; //返回参数值
+					}
+				}
+
+
+
+				//4.设置定时器：每经过1000毫秒执行任务（前面的1.2.3）
+				window.setInterval("genDate()", 1000);
+			}
+
+			function genDate() {
+				//1.创建Date对象拼接时分秒
+				var date = new Date();
+				//拼接时间
+				var dateStr = date.getFullYear() + "年" + (date.getMonth() + 1) + "月" + date.getDate() + "日&nbsp;&nbsp" +
+					date.getHours() + "时" + date.getMinutes() + "分" + date.getSeconds() + "秒";
+
+				//2.获取span标签对象
+				var spanTip = document.getElementById("spanTip");
+
+				//3.设置span标签对象的innerHTML属性
+				spanTip.innerHTML = dateStr;
+			}
+		</script>
+	</head>
+	<body>
+		<div>
+			<div id="top">
+				<div class="m_top">
+					<span class="logo">心晴音乐</span>
+					<ul class="menu1">
+						<li class="topCheck">
+							<a href="javascript:;">首页</a>
+						</li>
+
+						<li class="topCheck">
+							<a href="发现音乐.html">发现音乐</a>
+						</li>
+
+						<li class="topCheck">
+							<a href="javascript:;" id="mymusic">VIP</a>
+
+						<li class="topCheck">
+							<a href="个人中心.html">个人中心</a>
+						</li>
+					</ul>
+					<div class="m_input">
+						<img src="./img/find.png" />
+						<input id="find" type="text" placeholder="音乐" autocomplete="off" />
+					</div>
+					<a href="{{url_for('login')}}" class="m_login" id="m_login" title="点击跳转">登录</a>
+					<a href="login.html" class="m_login2" id="m_login2">退出登录</a>
+
+				</div>
+				<div class="m_back">
+				</div>
+				<span id="spanTip"></span>
+				<ul class="menu2">
+					<li>
+						<a href="javascript:;" class="topItemCheck">专辑</a>
+					</li>
+					<li>
+						<a href="javascript:;" class="topItemCheck">排行榜</a>
+					</li>
+					<li>
+						<a href="javascript:;" class="topItemCheck">歌单</a>
+					</li>
+					<li>
+						<a href="javascript:;" class="topItemCheck">歌手</a>
+					</li>
+				</ul>
+			</div>
+			<div id="content">
+				<!-- 轮播动画 -->
+				<div class="con_banner">
+					<div id="playBox" class="play-box">
+						<!--图片列表-->
+						<div id="imgList">
+							<img class="current" src="img/轮播/t1.jpg" />
+							<img src="img/轮播/t2.jpg" />
+							<img src="img/轮播/t3.jpg" />
+							<img src="img/轮播/t4.jpg" />
+							<img src="img/轮播/t5.jpg" />
+						</div>
+						<!--图标列表-->
+						<div class="iconList">
+							<ul id="iconul">
+								<li class="current current2">1</li>
+								<li class="current2">2</li>
+								<li class="current2">3</li>
+								<li class="current2">4</li>
+								<li class="current2">5</li>
+							</ul>
+						</div>
+						<!--左箭头-->
+						<div class="sliderbar slidebar-left" id="sliderbarl">&lt;</div>
+						<!--右箭头-->
+						<div class="sliderbar slidebar-right" id="sliderbarr">&gt;</div>
+					</div>
+				</div>
+			</div>
+
+
+			<div class=" middiv">
+				<div class="remen">
+					<p class="title">
+						<img src="./img/爱心.png" />
+						<span class="t-span">
+							我喜欢
+						</span>
+						<span class="con_gengduo">
+							<a href="javascript:;">更多>></a>
+						</span>
+					</p>
+					<table>
+						<thead>
+							<tr>
+								<th>歌名</th>
+								<th>歌手</th>
+								<th>类型</th>
+								<th>专辑</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div>
+				<div class="remen">
+					<p class="title">
+						<img src="./img/唱片.png" />
+						<span class="t-span">
+							热门推荐
+							<span class="con_type">
+								<a href="#">华语</a> |
+								<a href="#">流行</a> |
+								<a href="#">摇滚</a> |
+								<a href="#">民谣</a>
+							</span>
+						</span>
+						<span class="con_gengduo">
+							<a href="javascript:;">更多>></a>
+						</span>
+					</p>
+					<ul class="ul_list">
+						<li class="lisong">
+							<div>
+								<a href="javascript:;">
+									<img src="img/l.jpg" />
+								</a>
+							</div>
+							<a href="javascript:;">London Boy</a>
+						</li>
+						<li class="lisong">
+							<div>
+								<a href="javascript:;">
+									<img src="img/hdx.jpg" />
+								</a>
+							</div>
+							<a href="javascript:;">海の形</a>
+						</li>
+						<li class="lisong">
+							<div>
+								<a href="javascript:;">
+									<img src="img/xr.jpg" />
+								</a>
+							</div>
+							<a href="javascript:;">形容</a>
+						</li>
+						<li class="lisong">
+							<div>
+								<a href="javascript:;">
+									<img src="img/ssngsjzr.jpg" />
+								</a>
+							</div>
+							<a href="javascript:;">杀死那个石家庄人</a>
+						</li>
+					</ul>
+				</div>
+				<div class="gedan">
+					<p class="title">
+						<img src="./img/歌单.png" />
+						<span class="t-span">歌单</span>
+						<span class="con_gengduo">
+							<a href="javascript:;">更多>></a>
+						</span>
+					</p>
+					<ul class="ul_list">
+						<li>
+							<div>
+								<a href="javascript:;">
+									<img src="img/gedan/1.jpg" />
+								</a>
+							</div>
+							<a href="javascript:;">2022全网超好听热门流行歌曲推荐</a>
+						</li>
+						<li>
+							<div>
+								<a href="javascript:;">
+									<img src="img/gedan/2.jpg" />
+								</a>
+							</div>
+							<a href="javascript:;">祝有爱者更爱，无爱者自由</a>
+						</li>
+						<li>
+							<div>
+								<a href="javascript:;">
+									<img src="img/gedan/3.jpg" />
+								</a>
+							</div>
+							<a href="javascript:;">民谣复兴</a>
+						</li>
+						<li>
+							<div>
+								<a href="javascript:;">
+									<img src="img/gedan/4.jpg" />
+								</a>
+							</div>
+							<a href="javascript:;">说唱</a>
+						</li>
+						<li>
+							<div>
+								<a href="javascript:;">
+									<img src="img/gedan/5.jpg" />
+								</a>
+							</div>
+							<a href="javascript:;">日语</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div id="head">
+				<img src="./img/PlayMusic/up.png" />
+				<div id="wrap">
+					<audio id="music"></audio>
+					<span class="play_left">
+						<img src="./img/PlayMusic/last_1.png" class="t_20" id="up" />
+						<img src="./img/PlayMusic/play_1.png" class="t_30" id="p1" />
+						<img src="./img/PlayMusic/stop_1.png" class="t_30" id="p2" />
+						<img src="./img/PlayMusic/next_1.png" class="t_20" id="down" />
+					</span>
+					<div class="SongInfo">
+						<a href="#">
+							<img src="./img/唱片.png" class="songImg" id="Imgsong" />
+						</a>
+						<span class="song">
+							<a href="javascript:;" class="songname" id="songname">歌名</a>
+						</span>
+						<span class="singer">
+							<a href="javascript:;" class="singername" id="singername">singer</a>
+						</span>
+						<div class="jinDuTiao" id="jinDuTiao">
+							<div class="YuanDian" id="YuanDian"></div>
+							<div class="JinDu">
+								<div class="progress" id="progress"></div>
+							</div>
+						</div>
+						<span class="songTime">
+							<span class="currentTime" id="currentTime">00:00</span> /
+							<span class="totalTime" id="totalTime">00:00</span>
+						</span>
+					</div>
+
+					<span class="play_right">
+						<img src="./img/PlayMusic/音量_1.png" class="t_10 vol" />
+						<div id="volume">
+							<div id="vol-back"></div>
+						</div>
+						<img src="./img/PlayMusic/单曲播放.png" id="typep1" class="t_10 playOrder p1  " alt="单曲播放" />
+						<img src="./img/PlayMusic/随机播放_1.png" id="typep2" class="t_10 playOrder p2 notShow"
+							alt="随机播放" />
+						<img src="./img/PlayMusic/单曲循环.png" id="typep3" class="t_10 playOrder p3 notShow" alt="单曲循环" />
+						<div id="SongList">
+							<ul>
+								<li v-for="(item,index) in $store.state.songmenu" :key="index" @click="play(index)">
+									{{item.name}}--{{item.singer}}
+								</li>
+							</ul>
+						</div>
+						<img src="./img/PlayMusic/list_1.png" class="t_10 list" />
+					</span>
+				</div>
+			</div>
+			<div id="bottom">
+				<div class="fl">
+					<p>
+						华中师范大学©1997-2099
+						<span class="comm">
+							计算机科学与技术xxx：
+							<a href="#">鄂网文[2018]3506-263号</a>
+						</span>
+					</p>
+					<p>
+						违法和不良信息举报电话：6666-88888
+						<span class="comm">
+							举报邮箱：
+							<a href="#">xxx@qq.com</a>
+						</span>
+					</p>
+					<p>
+						粤B2-20090191-18
+						<span class="comm">
+							<a href="#">工业和信息化部备案管理系统网站</a>
+						</span>
+					</p>
+				</div>
+				<div class="fr">
+					<ul>
+						<li>服务条款</li>
+						<li>隐私政策</li>
+						<li>儿童隐私政策</li>
+						<li>版权投诉指引</li>
+						<li>意见反馈</li>
+					</ul>
+				</div>
+			</div>
+
+
+		</div>
+	</body>
+</html>
+
+
+

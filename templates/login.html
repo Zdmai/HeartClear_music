@@ -129,23 +129,28 @@ body {
     </style>
 </head>
 <body>
-    <div class="box">
-        <h2>登录</h2>
-        <div class="input-box">
-            <label>邮箱</label>
-            <input type="text">
-        </div>
-        <div class="input-box">
-            <label>密码</label>
-            <input type="password">
-        </div>
-        <div class="btn-box">
-            <a href="javascript:void(0)">忘记密码?</a>
-            <div>
-                <button>登录</button>
-                <button>注册</button>
+    <form action="/login" method="post">
+        <div class="box">
+            <h2>登录</h2>
+            <div class="input-box">
+                <label>邮箱</label>
+                <input type="text" placeholder='请输入邮箱' name="username">
+            </div>
+            <div class="input-box">
+                <label>密码</label>
+                <input type="password" placeholder='请输入密码' name="password">
+            </div>
+            <div class="btn-box">
+                <a href="javascript:void(0)">忘记密码?</a>
+                <div>
+<!--                     <input type="submit"> -->
+                    <button>登录</button>
+<!--                    </input>-->
+                    <form action="/sign_up" method="get"><button>注册</button></form>
+<!--                    <button>注册</button>-->
+                </div>
             </div>
         </div>
-    </div>
+    </form>
 </body>
 </html>
