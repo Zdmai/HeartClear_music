@@ -506,7 +506,6 @@
 				border-radius: 5px;
 				/* border:1px solid #000000;
 				*/
-				box-shadow: 2px #000000;
 				border-radius: 5px;
 				width: 40px;
 				height: 40px;
@@ -675,7 +674,7 @@
 			.remen,
 			.gexing,
 			.paihang,
-			.gedan {
+			.song_list {
 				width: 70%;
 				margin: 0 auto;
 				background: #fff;
@@ -1357,10 +1356,15 @@
 						</li>
 					</ul>
 					<div class="m_input">
-						<img src="./img/find.png" />
+						<img src="../static/img/find.png" />
 						<input id="find" type="text" placeholder="音乐" autocomplete="off" />
 					</div>
+
+					{% if session.get('username', 'guest') == 'guest' %}
 					<a href="{{url_for('login')}}" class="m_login" id="m_login" title="点击跳转">登录</a>
+					{% else %}
+					<a href="{{url_for('user')}}" class="m_login2" id="m_login3">{{session['username'].split('@')[0]}}</a>
+					{% endif %}
 					<a href="login.html" class="m_login2" id="m_login2">退出登录</a>
 
 				</div>
@@ -1388,11 +1392,11 @@
 					<div id="playBox" class="play-box">
 						<!--图片列表-->
 						<div id="imgList">
-							<img class="current" src="img/轮播/t1.jpg" />
-							<img src="img/轮播/t2.jpg" />
-							<img src="img/轮播/t3.jpg" />
-							<img src="img/轮播/t4.jpg" />
-							<img src="img/轮播/t5.jpg" />
+							<img class="current" src="../static/img/carousel/t1.jpg" />
+							<img src="../static/img/carousel/t2.jpg" />
+							<img src="../static/img/carousel/t3.jpg" />
+							<img src="../static/img/carousel/t4.jpg" />
+							<img src="../static/img/carousel/t5.jpg" />
 						</div>
 						<!--图标列表-->
 						<div class="iconList">
@@ -1416,7 +1420,7 @@
 			<div class=" middiv">
 				<div class="remen">
 					<p class="title">
-						<img src="./img/爱心.png" />
+						<img src="../static/img/爱心.png" />
 						<span class="t-span">
 							我喜欢
 						</span>
@@ -1440,7 +1444,7 @@
 				</div>
 				<div class="remen">
 					<p class="title">
-						<img src="./img/唱片.png" />
+						<img src="../static/img/唱片.png" />
 						<span class="t-span">
 							热门推荐
 							<span class="con_type">
@@ -1458,7 +1462,7 @@
 						<li class="lisong">
 							<div>
 								<a href="javascript:;">
-									<img src="img/l.jpg" />
+									<img src="../static/img/l.jpg" />
 								</a>
 							</div>
 							<a href="javascript:;">London Boy</a>
@@ -1466,7 +1470,7 @@
 						<li class="lisong">
 							<div>
 								<a href="javascript:;">
-									<img src="img/hdx.jpg" />
+									<img src="../static/img/hdx.jpg" />
 								</a>
 							</div>
 							<a href="javascript:;">海の形</a>
@@ -1474,7 +1478,7 @@
 						<li class="lisong">
 							<div>
 								<a href="javascript:;">
-									<img src="img/xr.jpg" />
+									<img src="../static/img/xr.jpg" />
 								</a>
 							</div>
 							<a href="javascript:;">形容</a>
@@ -1482,16 +1486,16 @@
 						<li class="lisong">
 							<div>
 								<a href="javascript:;">
-									<img src="img/ssngsjzr.jpg" />
+									<img src="../static/img/ssngsjzr.jpg" />
 								</a>
 							</div>
 							<a href="javascript:;">杀死那个石家庄人</a>
 						</li>
 					</ul>
 				</div>
-				<div class="gedan">
+				<div class="song_list">
 					<p class="title">
-						<img src="./img/歌单.png" />
+						<img src="../static/img/歌单.png" />
 						<span class="t-span">歌单</span>
 						<span class="con_gengduo">
 							<a href="javascript:;">更多>></a>
@@ -1501,7 +1505,7 @@
 						<li>
 							<div>
 								<a href="javascript:;">
-									<img src="img/gedan/1.jpg" />
+									<img src="../static/img/song_list/1.jpg" />
 								</a>
 							</div>
 							<a href="javascript:;">2022全网超好听热门流行歌曲推荐</a>
@@ -1509,7 +1513,7 @@
 						<li>
 							<div>
 								<a href="javascript:;">
-									<img src="img/gedan/2.jpg" />
+									<img src="../static/img/song_list/2.jpg" />
 								</a>
 							</div>
 							<a href="javascript:;">祝有爱者更爱，无爱者自由</a>
@@ -1517,7 +1521,7 @@
 						<li>
 							<div>
 								<a href="javascript:;">
-									<img src="img/gedan/3.jpg" />
+									<img src="../static/img/song_list/3.jpg" />
 								</a>
 							</div>
 							<a href="javascript:;">民谣复兴</a>
@@ -1525,7 +1529,7 @@
 						<li>
 							<div>
 								<a href="javascript:;">
-									<img src="img/gedan/4.jpg" />
+									<img src="../static/img/song_list/4.jpg" />
 								</a>
 							</div>
 							<a href="javascript:;">说唱</a>
@@ -1533,7 +1537,7 @@
 						<li>
 							<div>
 								<a href="javascript:;">
-									<img src="img/gedan/5.jpg" />
+									<img src="../static/img/song_list/5.jpg" />
 								</a>
 							</div>
 							<a href="javascript:;">日语</a>
@@ -1542,18 +1546,18 @@
 				</div>
 			</div>
 			<div id="head">
-				<img src="./img/PlayMusic/up.png" />
+				<img src="../static/img/PlayMusic/up.png" />
 				<div id="wrap">
 					<audio id="music"></audio>
 					<span class="play_left">
-						<img src="./img/PlayMusic/last_1.png" class="t_20" id="up" />
-						<img src="./img/PlayMusic/play_1.png" class="t_30" id="p1" />
-						<img src="./img/PlayMusic/stop_1.png" class="t_30" id="p2" />
-						<img src="./img/PlayMusic/next_1.png" class="t_20" id="down" />
+						<img src="../static/img/PlayMusic/last_1.png" class="t_20" id="up" />
+						<img src="../static/img/PlayMusic/play_1.png" class="t_30" id="p1" />
+						<img src="../static/img/PlayMusic/stop_1.png" class="t_30" id="p2" />
+						<img src="../static/img/PlayMusic/next_1.png" class="t_20" id="down" />
 					</span>
 					<div class="SongInfo">
 						<a href="#">
-							<img src="./img/唱片.png" class="songImg" id="Imgsong" />
+							<img src="../static/img/唱片.png" class="songImg" id="Imgsong" />
 						</a>
 						<span class="song">
 							<a href="javascript:;" class="songname" id="songname">歌名</a>
@@ -1574,22 +1578,21 @@
 					</div>
 
 					<span class="play_right">
-						<img src="./img/PlayMusic/音量_1.png" class="t_10 vol" />
+						<img src="../static/img/PlayMusic/音量_1.png" class="t_10 vol" />
 						<div id="volume">
 							<div id="vol-back"></div>
 						</div>
-						<img src="./img/PlayMusic/单曲播放.png" id="typep1" class="t_10 playOrder p1  " alt="单曲播放" />
-						<img src="./img/PlayMusic/随机播放_1.png" id="typep2" class="t_10 playOrder p2 notShow"
-							alt="随机播放" />
-						<img src="./img/PlayMusic/单曲循环.png" id="typep3" class="t_10 playOrder p3 notShow" alt="单曲循环" />
+						<img src="../static/img/PlayMusic/单曲播放.png" id="typep1" class="t_10 playOrder p1  " alt="单曲播放" />
+						<img src="../static/img/PlayMusic/随机播放_1.png" id="typep2" class="t_10 playOrder p2 notShow"
+							 alt="随机播放" />
+						<img src="../static/img/PlayMusic/单曲循环.png" id="typep3" class="t_10 playOrder p3 notShow" alt="单曲循环" />
 						<div id="SongList">
 							<ul>
 								<li v-for="(item,index) in $store.state.songmenu" :key="index" @click="play(index)">
-									{{item.name}}--{{item.singer}}
 								</li>
 							</ul>
 						</div>
-						<img src="./img/PlayMusic/list_1.png" class="t_10 list" />
+						<img src="../static/img/PlayMusic/list_1.png" class="t_10 list" />
 					</span>
 				</div>
 			</div>

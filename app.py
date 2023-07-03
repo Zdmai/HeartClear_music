@@ -11,20 +11,28 @@ def profile():
     name = session.get('username')
     return render_template('profile.html', name=name)
 
-
-@app.route('/index/<name>')
-def index(name):
-    username = session.get('username', "guest").split('@')[0]
+@app.route('/', methods = ['GET', 'POST'])
+@app.route('/index', methods=['GET', 'POST'])
+def index():
+    username = session.get('username', "guest")
+    if username != 'guest':
+        username = username.split('@')[0]
     return render_template('index.html')
+
+@app.route('/user')
+def user():
+    return render_template('user.html')
+
 
 #用户登录逻辑
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     error = None
     if request.method == 'POST':
-        session.get('user_id', None)
-        username = request.form.get('username', 'Guest')
+        username = session.get('username', None)
+        #username = request.form.get('username', 'Guest')
         password = request.form.get('password', None)
+        print(username)
         resp = make_response(redirect(url_for('index')))
         #if username在数据库中，登入成功
         # resp.set_cookie('username', request.form['username'])
@@ -44,9 +52,6 @@ def page_not_found(error):
     resp.headers['X-Something'] = 'Error'
     return resp
 
-@app.route('/user/<username>')
-def user(username):
-    return f'Hello {username}!'
 
 @app.route('/song/id=<int:id>')
 def song():
