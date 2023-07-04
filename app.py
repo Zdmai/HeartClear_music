@@ -11,6 +11,7 @@ app.config.from_pyfile('config.py')
 
 db.app = app
 db.init_app(app=app)
+query = db.session.query
 
 
 @app.cli.command()
@@ -28,6 +29,7 @@ def insdb():
     user.id = 0
     db.session.add(user)
     db.session.commit()
+
 
 @app.route('/profile')
 def profile():
@@ -56,6 +58,10 @@ def login():
         #username = request.form.get('username', 'Guest')
         password = request.form.get('password', None)
         print(username)
+        if query(User).filter('user_email').first:
+            flash('Yes!')
+        else:
+            flash('NO!')
         resp = make_response(redirect(url_for('index')))
         #if username在数据库中，登入成功
         # resp.set_cookie('username', request.form['username'])
