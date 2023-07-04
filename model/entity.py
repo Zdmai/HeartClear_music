@@ -8,8 +8,8 @@ class User(db.Model):
     user_name = db.Column(db.String(100))       #昵称
     password = db.Column(db.String(20))
     user_picture = db.Column(db.String(30), defaul='../static/img/user.jpg')
-    user_gender = db.Column(db.String(1))
-    user_signature = db.Column(db.String(200))   #个性签名
+    user_gender = db.Column(db.String(1))            #M , F or O:other
+    user_signature = db.Column(db.String(200), default="there is nothing")   #个性签名
 
     vip = db.Column(db.Integer, default=0)       #vip
     total_cost = db.Column(db.Integer, default=0)#一共冲了多少
@@ -72,6 +72,11 @@ class User_log(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     music_id = db.Column(db.Integer, db.ForeignKey('music.id'))
     command_type = db.Column(db.Integer)
+    '''
+    o:like the music
+    1:listen to that song
+    3:user(id) comment that music(id)
+    '''
     log_time = db.Column(db.DateTime, default=func.now())
 
 

@@ -5,10 +5,6 @@ from DB import db, query
 
 class UserService:
 
-    def create_user(self, user):
-        db.session.add(user)
-        db.session.commit()
-
     def get_user_by_id(self, id):
         users = query(User).filter(User.id == id).one_or_none()
         return users
@@ -31,7 +27,6 @@ class UserService:
             db.session.commit()
             flash("Register succeed!")
             return user.id
-
 
     def user_modify(self, user):
         store_user = self.get_user_by_id(user.id)
@@ -59,15 +54,21 @@ class UserService:
 
 class BillService():
 
-    def create_bill(self, bill):
+    def add_bill(self, bill):
         user = query(User).filter(User.id == bill.user_id).one_or_none()
-        user.total_cost += bill.transaction_amount
-        if user.total_cost >= 1:
-            user.vip = 1
-        db.session.add(bill)
-        db.session.commit()
+        if user:
+            user.total_cost += bill.transaction_amount
+            if user.total_cost >= 1:
+                user.vip = 1
+            db.session.add(bill)
+            db.session.commit()
+            flash(f"交易成功,{user.user_name}")
+            print("add a bill")
+        else:
+            print("there is error in create_bill")
 
-    def get_bill(self, user=None, id=None):
+
+    def get_bills(self, user=None, id=None):
         if user:
             bills = query(Bill).filter(Bill.user_id == user.id).order_by(Bill.bill_date)
         elif id:
@@ -75,5 +76,10 @@ class BillService():
         else:
             bills = None
         return bills
+
+
+# class User_logService:
+#
+#     def add_log(self, ):
 
 
