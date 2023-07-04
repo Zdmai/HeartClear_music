@@ -5,11 +5,14 @@ class User(db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_email = db.Column(db.String(50), nullable=False)
-    password=db.Column(db.String(20))
-    user_picture = db.Column(db.String(30))
+    user_name = db.Column(db.String(100))       #昵称
+    password = db.Column(db.String(20))
+    user_picture = db.Column(db.String(30), defaul='../static/img/user.jpg')
     user_gender = db.Column(db.String(1))
-    vip = db.Column(db.Integer, default=0)
-    total_cost = db.Column(db.Integer, default=0)
+    user_signature = db.Column(db.String(200))   #个性签名
+
+    vip = db.Column(db.Integer, default=0)       #vip
+    total_cost = db.Column(db.Integer, default=0)#一共冲了多少
 
     bill = db.relationship('Bill', backref='User')
     user_log = db.relationship('User_log', backref='User')
@@ -24,6 +27,7 @@ class Music(db.Model):
     lyric = db.Column(db.Text)
     album_name = db.Column(db.String(20))
     musician_id = db.Column(db.Integer, db.ForeignKey('music.id'))
+    vip = db.Column(db.Integer, default = 0)
 
     user_log = db.relationship('User_log', backref='Music')
     recommendation = db.relationship('Recommendation', backref='Music')

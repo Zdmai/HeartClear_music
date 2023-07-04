@@ -3,6 +3,7 @@ from flask import Flask, request, session, g, redirect, url_for, \
      abort, render_template, flash, make_response
 from DB import db, query
 from model.entity import *
+from service.service import *
 
 
 app = Flask(__name__, static_url_path='/')
@@ -66,12 +67,16 @@ def login():
         # resp.set_cookie('username', request.form['username'])
         session['username'] = request.form['username']
         return resp
+    ser = UserService()
+    print(ser.get_all_user())
     print(request.args)
     print(request.form)
     return render_template('login.html', error=error)
 
 @app.route('/logout')
 def logout():
+    session['user_name'] = None
+    flash("Logout succeed!")
     return render_template('logout.html')
 
 @app.errorhandler(404)
@@ -84,6 +89,9 @@ def page_not_found(error):
 @app.route('/song/id=<int:id>')
 def song():
     return f'Hello {id}!'
+
+
+
 
 
 
