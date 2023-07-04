@@ -1361,9 +1361,9 @@
 					</div>
 
 					{% if session.get('username', 'guest') == 'guest' %}
-					<a href="{{url_for('login')}}" class="m_login" id="m_login" title="点击跳转">登录</a>
+					<a href="{{url_for('login')}}" class="m_login1" id="m_login1" title="点击跳转">登录</a>
 					{% else %}
-					<a href="{{url_for('user')}}" class="m_login2" id="m_login3">{{session['username'].split('@')[0]}}</a>
+					<a href="{{url_for('user')}}" class="m_login1" id="m_login">{{username}}</a>
 					{% endif %}
 					<a href="login.html" class="m_login2" id="m_login2">退出登录</a>
 

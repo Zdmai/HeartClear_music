@@ -1,10 +1,33 @@
 import sqlite3
 from flask import Flask, request, session, g, redirect, url_for, \
      abort, render_template, flash, make_response
+from DB import db
+from model.model import *
+
 
 app = Flask(__name__, static_url_path='/')
 app.secret_key = b'_djflajeoflaj'
+app.config.from_pyfile('config.py')
 
+db.app = app
+db.init_app(app=app)
+
+
+@app.cli.command()
+def createdata():
+    db.drop_all()
+    db.create_all()
+
+@app.cli.command()
+def insdb():
+    user=User()
+    user.user_email = "2580324258@qq.com"
+    user.gender = "M"
+    user.user_picture = "./static/img/happydog.jpg"
+    user.password = '12345'
+    user.id = 0
+    db.session.add(user)
+    db.session.commit()
 
 @app.route('/profile')
 def profile():
@@ -29,7 +52,7 @@ def user():
 def login():
     error = None
     if request.method == 'POST':
-        username = session.get('username', None)
+        username = request.form.get('username', None)
         #username = request.form.get('username', 'Guest')
         password = request.form.get('password', None)
         print(username)
