@@ -1,8 +1,8 @@
 import sqlite3
 from flask import Flask, request, session, g, redirect, url_for, \
      abort, render_template, flash, make_response
-from DB import db
-from model.model import *
+from DB import db, query
+from model.entity import *
 
 
 app = Flask(__name__, static_url_path='/')
@@ -11,7 +11,6 @@ app.config.from_pyfile('config.py')
 
 db.app = app
 db.init_app(app=app)
-query = db.session.query
 
 
 @app.cli.command()
@@ -85,30 +84,6 @@ def page_not_found(error):
 @app.route('/song/id=<int:id>')
 def song():
     return f'Hello {id}!'
-
-#@app.route('/login', methods=['GET', 'POST'])
-#def login():
-#    if request.method == 'PODT':
-#        return do_the_login()
-#    else:
-#        return show_the_login_form()
-
-#@app.route('/')
-#def hello_world():
-#    return 'Hello <p>Flask</p>!'
-#
-#@app.route('/')
-#def hello_world():
-#    return 'Hello <p>Flask</p>!'
-#@app.route('/')
-#def hello_world():
-#    return 'Hello <p>Flask</p>!'
-#@app.route('/')
-#def hello_world():
-#    return 'Hello <p>Flask</p>!'
-#
-#
-
 
 
 
