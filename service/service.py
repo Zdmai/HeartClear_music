@@ -52,7 +52,7 @@ class UserService:
         return users
 
 
-class BillService():
+class BillService:
 
     def add_bill(self, bill):
         user = query(User).filter(User.id == bill.user_id).one_or_none()
@@ -123,7 +123,7 @@ class CommentService:
 
 
 
-class MusicService():
+class MusicService:
 
     #根据名字查询歌曲
     def get_music_by_name(self, name):
@@ -162,7 +162,7 @@ class MusicService():
 
 
 
-class MusicianService():
+class MusicianService:
 
     #按id查询
     def get_musician_by_id(self, id):
@@ -194,22 +194,54 @@ class MusicianService():
         db.session.commit()
 
 
-class CollectService():
+class CollectService:
 
-    def get_collection_by_id(self, user_id):
-        collection = query(Collect).filter(Collect.user_id == user_id).order_by(Collect.id).one_or_none()
+    def get_collection_by_userid(self, user_id):
+        collection = query(Collect).filter(Collect.user_id == user_id).order_by(Collect.id).all()
         return collection
 
+    def get_collection_by_music_user(self, user, music):
+        collections = query(Collect).filter(Collect.user_id == user.id and Collect.music_id == music.id)
+        return collections
 
-    def add_music(self, music):
-        one_collection = self.get_collection_by_id(music.id)
+    def add_music(self, user, music):
+        one_collection = self.get_collection_by_music_user(user, music).one_or_none()
         if one_collection:
             flash("You have collected this music")
-            return 0
         else:
+            flash("Add succeed!")
             db.session.add(one_collection)
             db.session.commit()
 
-    def delete_collection(self, collection):
-        db.session.delete(collection)
-        db.session.commit()
+    def delete_collection(self, user, music):
+        collections = self.get_collection_by_music_user(user, music)
+        if collections:
+            flash("Delete succeed!")
+            db.session.delete(collections)
+            db.session.commit()
+        else:
+            flash("You have not collect the music!")
+
+
+class TagService:
+
+    def get_music_tag(self, music_id):
+        tags = query(Tag).filter(Tag.music_id == music_id)
+        return tags
+
+    def if_in(self, music_id, tag_name):
+        tag = query(Tag).filter(Tag.music_id == music_id and Tag.tag_name == tag_name)
+        if tag:
+            return True
+        else:
+            return False
+
+    def add_tag(self, music_id, tag_name):
+        if not self.if_in(music_id, tag_name):
+            tag = Tag(tag_name=tag_name, music_id=music_id)
+            db.session.add(tag)
+            db.session.commit()
+            return 1
+        else:
+            print("The music already have this tag!")
+            return 0

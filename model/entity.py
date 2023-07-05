@@ -23,27 +23,26 @@ class Music(db.Model):
     __tablename__ = 'music'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     music_name = db.Column(db.String(50), nullable=False)
-    music_picture = db.Column(db.String(30))
     lyric = db.Column(db.Text)
     album_name = db.Column(db.String(20))
     musician_id = db.Column(db.Integer, db.ForeignKey('music.id'))
-    vip = db.Column(db.Integer, default = 0)
-    music_path = db.Column(db.String(50), nullable=False)
+    vip = db.Column(db.Integer, default=0)
 
     user_log = db.relationship('User_log', backref='Music')
     recommendation = db.relationship('Recommendation', backref='Music')
     collection = db.relationship("Collect", backref='Music')
+    tag = db.relationship("Tag", backref="Music")
 
 class Musician(db.Model):
     __tablename__ = 'musician'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(50), nullable=False)
-    music_picture = db.Column(db.String(30))
 
 class Tag(db.Model):
     __tablename__ = 'tag'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     tag_name = db.Column(db.String(50), nullable=False)
+    music_id = db.Column(db.Integer, db.ForeignKey('music.id'))
 
 class Bill(db.Model):
     __tablename__ = 'bill'
