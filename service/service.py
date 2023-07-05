@@ -83,3 +83,133 @@ class BillService():
 #     def add_log(self, ):
 
 
+
+
+class CommentService:
+
+    def add_comment(self, user_id, content, music_id):
+        new_comment = Comment(user_id=user_id, content=content, music_id=music_id)
+        db.session.add(new_comment)
+        db.session.commit()
+        print("评论添加成功")
+
+    def delete_comment(self, comment_id):
+        comment_to_delete = Comment.query.filter(Comment.id == comment_id).first()
+        if comment_to_delete:
+            db.session.delete(comment_to_delete)
+            db.session.commit()
+            print("评论删除成功")
+        else:
+            print("找不到要删除的评论")
+
+    # def get_comment_by_user_and_movie(self, user_id, movie_id):
+    #     comments = query(Comment).filter(Comment.user_id == user_id, Comment.movie_id == movie_id).all()
+    #     if comments:
+    #         for comment in comments:
+    #             print(f"评论：{comment.content}")
+    #     else:
+    #         print("找不到评论")
+
+    def get_comment_by_music_id(self, music_id):
+        '''
+        :param music_id:
+        :return: A list of the comment of that music
+        '''
+        comments = query(Comment).filter(Comment.music_id == music_id).order_by(Comment.comment_date)
+        return comments
+
+
+
+
+
+
+class MusicService():
+
+    #根据名字查询歌曲
+    def get_music_by_name(self, name):
+        musics = query(Music).filter(name in Music.music_name).all()
+        return musics
+
+    def search_musicname(self, name):
+        '''
+        返回音乐名字，用于搜索提示
+        :param name:
+        :return: top 7 the matched the name
+        '''
+        music_name = query(Music.music_name).filter(name in Music.music_name).all()
+        return list(music_name)[0:7]
+
+    #根据id查询歌曲
+    def get_music_by_id(self, id):
+        music = query(Music).filter(Music.id == id).order_by(Music.id).one_or_none()
+        return music
+
+    #添加歌曲
+    def add_music(self, music):
+        one_music = self.get_music_by_name(music.id).one_or_none()
+        if one_music:
+            return 0
+        else:
+            db.session.add(music)
+            db.session.commit()
+            return '添加成功'
+
+    #修改歌曲信息
+    def update_music(self, music):
+        one_music = self.get_music_by_id(music.id)
+        one_music.music_name = music.music_name
+        db.session.commit()
+
+
+
+class MusicianService():
+
+    #按id查询
+    def get_musician_by_id(self, id):
+        musician = query(Musician).filter(Musician.id == id).order_by(Musician.id)
+        return musician
+
+    def get_musician_by_name(self, name):
+        '''
+        返回一个实例列表
+        :param name:
+        :return:
+        '''
+        musician = query(Musician).filter(name in Musician.name).order_by(Musician.name).all()
+        return musician
+
+    def search_the_musicianname(self, name):
+        '''
+        返回一个列表的前7个，来用于搜索提示
+        :param name:
+        :return:top 7 of the matched name
+        '''
+        musician_names = query(Musician).filter(name in Musician.name).order_by(Musician.name)
+        return list(musician_names)[0:7]
+
+    #修改图片
+    def change_picture(self, musician):
+        new_musician = self.get_musician_by_id(musician.id)
+        new_musician.music_picture = musician.music_picture
+        db.session.commit()
+
+
+class CollectService():
+
+    def get_collection_by_id(self, user_id):
+        collection = query(Collect).filter(Collect.user_id == user_id).order_by(Collect.id).one_or_none()
+        return collection
+
+
+    def add_music(self, music):
+        one_collection = self.get_collection_by_id(music.id)
+        if one_collection:
+            flash("You have collected this music")
+            return 0
+        else:
+            db.session.add(one_collection)
+            db.session.commit()
+
+    def delete_collection(self, collection):
+        db.session.delete(collection)
+        db.session.commit()

@@ -28,6 +28,7 @@ class Music(db.Model):
     album_name = db.Column(db.String(20))
     musician_id = db.Column(db.Integer, db.ForeignKey('music.id'))
     vip = db.Column(db.Integer, default = 0)
+    music_path = db.Column(db.String(50), nullable=False)
 
     user_log = db.relationship('User_log', backref='Music')
     recommendation = db.relationship('Recommendation', backref='Music')
@@ -36,7 +37,7 @@ class Music(db.Model):
 class Musician(db.Model):
     __tablename__ = 'musician'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    music_name = db.Column(db.String(50), nullable=False)
+    name = db.Column(db.String(50), nullable=False)
     music_picture = db.Column(db.String(30))
 
 class Tag(db.Model):
