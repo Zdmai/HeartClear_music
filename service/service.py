@@ -245,3 +245,11 @@ class TagService:
         else:
             print("The music already have this tag!")
             return 0
+
+UserService = UserService()
+MusicService = MusicService()
+MusicianService = MusicianService()
+TagService = TagService()
+CollectService = CollectService()
+CommentService = CommentService()
+BillService = BillService()
