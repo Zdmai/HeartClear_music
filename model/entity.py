@@ -7,9 +7,9 @@ class User(db.Model):
     user_email = db.Column(db.String(50), nullable=False)
     user_name = db.Column(db.String(100))       #昵称
     password = db.Column(db.String(20))
-    user_picture = db.Column(db.String(30), defaul='../static/img/user.jpg')
-    user_gender = db.Column(db.String(1))            #M , F or O:other
-    user_signature = db.Column(db.String(200), default="there is nothing")   #个性签名
+    user_picture = db.Column(db.String(30), default='../static/img/user.jpg')
+    user_gender = db.Column(db.String(1), default="O")            #M , F or O:other 未知
+    user_signature = db.Column(db.String(200), default="这家伙很懒")   #个性签名
 
     vip = db.Column(db.Integer, default=0)       #vip
     total_cost = db.Column(db.Integer, default=0)#一共冲了多少
@@ -75,7 +75,7 @@ class User_log(db.Model):
     '''
     o:like the music
     1:listen to that song
-    3:user(id) comment that music(id)
+    3:user(id) comment that music(il')
     '''
     log_time = db.Column(db.DateTime, default=func.now())
 

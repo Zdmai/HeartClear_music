@@ -9,9 +9,9 @@ class UserService:
         users = query(User).filter(User.id == id).one_or_none()
         return users
 
-    def get_user_by_email(self, email):
-        user = query(User).filter(User.user_email == email).one_or_none()
-        return user
+    def get_user_id_by_email(self, email):
+        id = query(User.id).filter(User.user_email == email).one_or_none()
+        return id
 
     def query_signature_by_id(self, id):
         user = self.get_user_by_id(id)
@@ -48,7 +48,7 @@ class UserService:
         print("Modify succeed!")
 
     def get_all_user(self):
-        users = query(User).order_by(User.id).all()
+        users = query(User).filter(True).order_by(User.id)
         return users
 
 
@@ -70,9 +70,9 @@ class BillService:
 
     def get_bills(self, user=None, id=None):
         if user:
-            bills = query(Bill).filter(Bill.user_id == user.id).order_by(Bill.bill_date)
+            bills = query(Bill).filter(Bill.user_id == user.id).order_by(Bill.bill_date).all()
         elif id:
-            bills = query(Bill).filter(Bill.id == id).order_by(Bill.bill_date)
+            bills = query(Bill).filter(Bill.id == id).order_by(Bill.bill_date).all()
         else:
             bills = None
         return bills
@@ -88,7 +88,9 @@ class BillService:
 class CommentService:
 
     def add_comment(self, user_id, content, music_id):
+        print('begin')
         new_comment = Comment(user_id=user_id, content=content, music_id=music_id)
+        print('end')
         db.session.add(new_comment)
         db.session.commit()
         print("评论添加成功")
@@ -137,7 +139,7 @@ class MusicService:
         :return: top 7 the matched the name
         '''
         music_name = query(Music.music_name).filter(name in Music.music_name).all()
-        return list(music_name)[0:7]
+        return music_name[0:7]
 
     #根据id查询歌曲
     def get_music_by_id(self, id):
@@ -166,7 +168,7 @@ class MusicianService:
 
     #按id查询
     def get_musician_by_id(self, id):
-        musician = query(Musician).filter(Musician.id == id).order_by(Musician.id)
+        musician = query(Musician).filter(Musician.id == id).order_by(Musician.id).one_or_none()
         return musician
 
     def get_musician_by_name(self, name):
@@ -184,8 +186,8 @@ class MusicianService:
         :param name:
         :return:top 7 of the matched name
         '''
-        musician_names = query(Musician).filter(name in Musician.name).order_by(Musician.name)
-        return list(musician_names)[0:7]
+        musician_names = query(Musician).filter(name in Musician.name).order_by(Musician.name).all()
+        return musician_names[0:7]
 
     #修改图片
     def change_picture(self, musician):

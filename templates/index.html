@@ -1352,7 +1352,11 @@
 							<a href="javascript:;" id="mymusic">VIP</a>
 
 						<li class="topCheck">
-							<a href="个人中心.html">个人中心</a>
+						{% if session.get('user_id') == None %}
+							<a href="{{url_for('user', id=id)}}">个人中心</a>
+						{% else %}}
+							<a href="login.html"></a>
+						{% endif %}
 						</li>
 					</ul>
 					<div class="m_input">
@@ -1360,7 +1364,7 @@
 						<input id="find" type="text" placeholder="音乐" autocomplete="off" />
 					</div>
 
-					{% if session.get('username', 'guest') == 'guest' %}
+					{% if username == 'guest' %}
 					<a href="{{url_for('login')}}" class="m_login1" id="m_login1" title="点击跳转">登录</a>
 					{% else %}
 					<a href="{{url_for('user')}}" class="m_login1" id="m_login">{{username}}</a>

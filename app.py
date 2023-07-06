@@ -1,3 +1,4 @@
+#encoding: utf-8
 import sqlite3
 from flask import Flask, request, session, g, redirect, url_for, \
      abort, render_template, flash, make_response
@@ -14,21 +15,7 @@ db.app = app
 db.init_app(app=app)
 
 
-@app.cli.command()
-def createdata():
-    db.drop_all()
-    db.create_all()
 
-@app.cli.command()
-def insdb():
-    user=User()
-    user.user_email = "2580324258@qq.com"
-    user.gender = "M"
-    user.user_picture = "./static/img/happydog.jpg"
-    user.password = '12345'
-    user.id = 0
-    db.session.add(user)
-    db.session.commit()
 
 
 @app.route('/profile')
@@ -36,48 +23,70 @@ def profile():
     name = session.get('username')
     return render_template('profile.html', name=name)
 
+
+
+@app.route('/user/<id>')
+def user(id):
+    one = UserService.get_user_by_id(id)
+    return render_template('person_show1.html', user=one)
+
 @app.route('/', methods = ['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 def index():
+    user_id = session.get('user_id')
+
     username = session.get('username', "guest")
     if username != 'guest':
         username = username.split('@')[0]
     return render_template('index.html')
 
-@app.route('/user')
-def user():
-    return render_template('user.html')
 
+@app.route('/sign_up')
+def sign_up():
+    useremail = request.form.get('useremail', 'Guest@mail.com')
+    # if '@' not in useremail:
+    #     return sign_up()
+    password = request.form.get('passward')
+    one = UserService.get_user_by_email(useremail)
+    if one:
+        flash("This email have signed up!")
+    else:
+        user = User(user_email=useremail, user_name=useremail.split('@')[0], password=password)
+        print(user)
+        db.session.add(user)
+        db.session.commit()
+        session['user_id'] = UserService.get_user_id_by_email(useremail)
+        return redirect(url_for('index'))
+    return render_template('sign_up.html')
 
 #用户登录逻辑
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     error = None
     if request.method == 'POST':
-        username = request.form.get('username', None)
-        #username = request.form.get('username', 'Guest')
+        useremail = request.form.get('useremail', 'Guest')
         password = request.form.get('password', None)
-        print(username)
-        if query(User).filter('user_email').first:
-            flash('Yes!')
+        print(useremail)
+        user = UserService.get_user_by_email(useremail)
+        if user:
+            flash('Welcome HeartClearMusic!')
         else:
-            flash('NO!')
-        resp = make_response(redirect(url_for('index')))
+            flash('There is something error!')
+            return redirect(url_for('sign_up'))
         #if username在数据库中，登入成功
         # resp.set_cookie('username', request.form['username'])
-        session['username'] = request.form['username']
-        return resp
-    ser = UserService()
-    print(ser.get_all_user())
+        session['useremail'] = useremail
+        session['id'] = user.id
+        return render_template((url_for('index')))
     print(request.args)
     print(request.form)
     return render_template('login.html', error=error)
 
 @app.route('/logout')
 def logout():
-    session['user_name'] = None
+    session.clear()
     flash("Logout succeed!")
-    return render_template('logout.html')
+    return redirect(url_for('index'))
 
 @app.errorhandler(404)
 def page_not_found(error):
@@ -86,12 +95,200 @@ def page_not_found(error):
     return resp
 
 
-@app.route('/song/id=<int:id>')
+@app.route('/song')
 def song():
-    return f'Hello {id}!'
+    return render_template('detail.html')
+
+#------------------------------------------
+
+
+@app.cli.command()
+def create():
+    user = User()
+    user.user_email = "2580324258@qq.com"
+    user.user_gender = "M"
+    user.user_picture = "./static/img/happydog.jpg"
+    user.password = '12345'
+    user.id = 1
+    db.session.add(user)
+    db.session.commit()
+
+
+@app.cli.command()
+def create():
+
+    bill = Bill()
+    bill.id = 1
+    bill.bill_date = "2023.2.23"
+    bill.transaction_amount = 30
+    bill.user_id = 1
+    db.session.add(bill)
+
+    music = Music()
+    music.id = 1
+    music.music_name = "许嵩"
+    music.lyric = "巴拉巴拉巴拉"
+    music.album_name = "卡拉芭比大海"
+    music.vip = 9
+    music.musician_id = 1
+    db.session.add(music)
+
+    musician = Musician()
+    musician.id = 1
+    musician.name = "许嵩"
+    db.session.add(musician)
+
+    collect = Collect()
+    collect.id = 2
+    collect.song_list_name = "我的最爱"
+    collect.music_id = 1
+    collect.user_id = 1
+    db.session.add(collect)
+    db.session.commit()
+
+
+@app.cli.command()
+def dfg():
+    tag = Tag()
+    tag.music_id = 1
+    tag.tag_name = "青春"
+    db.session.add(tag)
+
+    recommendation = Recommendation()
+    recommendation.music_id = 1
+    recommendation.user_id = 1
+    db.session.add(recommendation)
+
+    comment = Comment()
+    comment.id = 1
+    comment.user_id = 1
+    comment.music_id = 1
+    comment.content = "夜空中最亮的星！"
+    comment.comment_date = "2020.2.20"
+    db.session.add(comment)
+
+    user_log = User_log()
+    user_log.id = 1
+    user_log.user_id = 1
+    user_log.music_id = 1
+    user_log.command_type = 1
+    user_log.log_time = "2023.2.23"
+    db.session.add(user_log)
+
+    db.session.commit()
 
 
 
+@app.cli.command()
+def createdata():
+    db.drop_all()
+    db.create_all()
+
+@app.cli.command()
+def insdb():
+    user=User()
+    user.user_email = "zzz@qq.com"
+    user.user_name = user.user_email.split("@")[0]
+    user.gender = "M"
+    user.user_picture = "./static/img/happydog.jpg"
+    user.password = 'zzz'
+    db.session.add(user)
+    db.session.commit()
+
+
+
+@app.cli.command()
+def get():
+    print(UserService.get_user_by_id('1').user_email)
+
+
+@app.cli.command()
+def zx():
+    print(UserService.get_user_by_id('1').password)
+
+
+@app.cli.command()
+def cv():
+    print(UserService.get_user_by_id('1').user_picture)
+
+
+@app.cli.command()
+def cxk():
+    print(UserService.get_user_by_id('1').user_gender)
+
+
+@app.cli.command()
+def cll():
+    print(UserService.get_user_by_id('1').user_signature)
+
+
+@app.cli.command()
+def fcc():
+    print(UserService.get_user_by_id('1').vip)
+
+
+@app.cli.command()
+def ycj():
+    print(UserService.get_user_by_id('1').total_cost)
+
+
+@app.cli.command()
+def bill():
+    print(BillService.get_bills(id='1')[0].transaction_amount)
+
+
+@app.cli.command()
+def bill1():
+    print(BillService.get_bills(id='1')[0].user_id)
+
+
+@app.cli.command()
+def bill2():
+    print(BillService.get_bills(id='1')[0].bill_date)
+
+
+@app.cli.command()
+def zzx1():
+    print(MusicService.get_music_by_id(1).album_name)
+
+
+@app.cli.command()
+def zzx2():
+    print(MusicService.get_music_by_id(1).music_name)
+
+
+@app.cli.command()
+def zzx3():
+    print(MusicService.get_music_by_id(1).music_name)
+
+
+@app.cli.command()
+def zzx4():
+    print(MusicService.get_music_by_id(1).lyric)
+
+
+@app.cli.command()
+def zzx5():
+    print(MusicService.get_music_by_id(1).vip)
+
+
+@app.cli.command()
+def zzx6():
+    print(MusicService.get_music_by_id(1).musician_id)
+
+
+@app.cli.command()
+def zzz1():
+    print(MusicianService.get_musician_by_id('1')[0].name)
+
+
+@app.cli.command()
+def yyy1():
+    print(TagService.get_music_tag('1')[0].tag_name)
+
+
+
+#------------------------------------------
 
 
 

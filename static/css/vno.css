@@ -7302,7 +7302,6 @@ body {
 
 .article-entry .highlight pre {
   border: none;
-  margin: 10;
   padding: 0;
 }
 
@@ -8011,11 +8010,6 @@ hr {
   width: 30%
 }
 
-.panel-cover--collapsed .iUp {
-  -webkit-transition: all 0 cubic-bezier(0.19, 1, 0.22, 1);
-  -moz-transition: all 0 cubic-bezier(0.19, 1, 0.22, 1);
-  transition: all 0 cubic-bezier(0.19, 1, 0.22, 1)
-}
 
 .panel-cover--overlay {
   display: block;
@@ -8484,7 +8478,6 @@ i {
 }
 
 .gwab {
-  background: url(/img/beian.png) no-repeat;
   background-size: 12px 12px;
   background-position: 3px 2px;
   padding-left: 18px;

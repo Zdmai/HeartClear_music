@@ -7,7 +7,6 @@
     <title>心晴音乐平台注册</title>
     <style>
 
-@charset "utf-8";
 
 * {
     margin: 0;
@@ -107,21 +106,23 @@ body {
     </style>
 </head>
 <body>
-    <div class="box">
-        <h2>注册</h2>
-        <div class="input-box">
-            <label>邮箱</label>
-            <input type="text">
-        </div>
-        <div class="input-box">
-            <label>密码</label>
-            <input type="password">
-        </div>
-        <div class="btn-box">
-            <div>
-                <button>注册</button>
+    <form action="/sign_up" method="post">
+        <div class="box">
+            <h2>注册</h2>
+            <div class="input-box">
+                <label>邮箱</label>
+                <input type="text" placeholder='请输入邮箱' name="useremail">
+            </div>
+            <div class="input-box" >
+                <label>密码</label>
+                <input type="password" placeholder='请输入密码' name="passward">
+            </div>
+            <div class="btn-box">
+                <div>
+                    <button>注册</button>
+                </div>
             </div>
         </div>
-    </div>
+    </form>
 </body>
 </html>
