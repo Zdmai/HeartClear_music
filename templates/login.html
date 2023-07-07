@@ -128,19 +128,19 @@ body {
     </style>
 </head>
 <body>
-    <form action="/login" method="gost">
+    <form action="/login" method="POST">
         <div class="box">
             <h2>登录</h2>
             <div class="input-box">
                 <label>邮箱</label>
-                <input type="text" placeholder='请输入邮箱' name="useremail">
+                <input type="email" placeholder='请输入邮箱' name="useremail">
             </div>
             <div class="input-box">
                 <label>密码</label>
                 <input type="password" placeholder='请输入密码' name="password">
             </div>
             <div class="btn-box">
-                <a href="javascript:void(0)">忘记密码?</a>
+                <a href="{{ url_for('forget') }}">忘记密码?</a>
                 <div>
 <!--                     <input type="submit"> -->
                     <button>登录</button>

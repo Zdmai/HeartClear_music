@@ -8,7 +8,7 @@
     <style>
         /* 仿哔哩哔哩up主@丿Ares丶-倾城  */
 
-@charset "utf-8";
+/*@charset "utf-8";*/
 
 * {
     margin: 0;
@@ -123,28 +123,30 @@ body {
 <body>
     <div class="box">
         <h2>忘记密码</h2>
-        <div class="input-box">
-            <label>邮箱</label>
-            <input type="text">
-        </div>
-        <div class="input-box">
-            <label>邮箱验证码</label>
-            <input type="password">
-        </div>
-        <div class="input-box">
-            <label>新密码</label>
-            <input type="password">
-        </div>
-        <div class="input-box">
-            <label>确认密码</label>
-            <input type="password">
-        </div>
-        <div class="btn-box">
-            <a href="javascript:void(0)">获取邮箱验证码</a>
-            <div>
-                <button>登录</button>
+<!--        <div class="input-box">-->
+<!--            <label>邮箱</label>-->
+<!--            <input type="text">-->
+<!--        </div>-->
+<!--        <div class="input-box">-->
+<!--            <label>邮箱验证码</label>-->
+<!--            <input type="password">-->
+<!--        </div>-->
+        <form action="/user/forget" method="POST">
+            <div class="input-box">
+                <label>新密码</label>
+                <input type="password" name="password1">
             </div>
-        </div>
+            <div class="input-box">
+                <label>确认密码</label>
+                <input type="password" name="password2">
+            </div>
+            <div class="btn-box">
+    <!--            <a href="javascript:void(0)">获取邮箱验证码</a>-->
+                <div>
+                    <button>登录</button>
+                </div>
+            </div>
+        </form>
     </div>
 </body>
 </html>

@@ -1,4 +1,5 @@
 from flask import flash
+import os
 from model.entity import *
 from DB import db, query
 
@@ -28,16 +29,16 @@ class UserService:
             flash("Register succeed!")
             return user.id
 
-    def user_modify(self, user):
-        store_user = self.get_user_by_id(user.id)
-        if user.user_name:
-            store_user.user_name = user.user_name
-        if user.gender:
-            store_user.gender = user.gender
-        if user.user_signature:
-            store_user = user.user_signature
-        if user.user_picture:
-            store_user.user_picture = user.user_picture
+    def user_modify(self, id, sex, name, sign, picture):
+        store_user = self.get_user_by_id(id)
+        if name:
+            store_user.user_name = name
+        if sex:
+            store_user.user_gender = sex
+        if sign:
+            store_user.user_signature = sign
+        if picture:
+            print(type(picture), '\n', picture)
         db.session.commit()
         flash("Modify succeed!")
 
@@ -52,30 +53,30 @@ class UserService:
         return users
 
 
-class BillService:
-
-    def add_bill(self, bill):
-        user = query(User).filter(User.id == bill.user_id).one_or_none()
-        if user:
-            user.total_cost += bill.transaction_amount
-            if user.total_cost >= 1:
-                user.vip = 1
-            db.session.add(bill)
-            db.session.commit()
-            flash(f"交易成功,{user.user_name}")
-            print("add a bill")
-        else:
-            print("there is error in create_bill")
-
-
-    def get_bills(self, user=None, id=None):
-        if user:
-            bills = query(Bill).filter(Bill.user_id == user.id).order_by(Bill.bill_date).all()
-        elif id:
-            bills = query(Bill).filter(Bill.id == id).order_by(Bill.bill_date).all()
-        else:
-            bills = None
-        return bills
+# class BillService:
+#
+#     def add_bill(self, bill):
+#         user = query(User).filter(User.id == bill.user_id).one_or_none()
+#         if user:
+#             user.total_cost += bill.transaction_amount
+#             if user.total_cost >= 1:
+#                 user.vip = 1
+#             db.session.add(bill)
+#             db.session.commit()
+#             flash(f"交易成功,{user.user_name}")
+#             print("add a bill")
+#         else:
+#             print("there is error in create_bill")
+#
+#
+#     def get_bills(self, user=None, id=None):
+#         if user:
+#             bills = query(Bill).filter(Bill.user_id == user.id).order_by(Bill.bill_date).all()
+#         elif id:
+#             bills = query(Bill).filter(Bill.id == id).order_by(Bill.bill_date).all()
+#         else:
+#             bills = None
+#         return bills
 
 
 # class User_logService:
@@ -129,7 +130,7 @@ class MusicService:
 
     #根据名字查询歌曲
     def get_music_by_name(self, name):
-        musics = query(Music).filter(name in Music.music_name).all()
+        musics = query(Music).filter(Music.music_name.like('%' + name + '%')).all()
         return musics
 
     def search_musicname(self, name):
@@ -138,8 +139,16 @@ class MusicService:
         :param name:
         :return: top 7 the matched the name
         '''
-        music_name = query(Music.music_name).filter(name in Music.music_name).all()
+        music_name = query(Music.music_name).filter(Music.music_name.like('%'+name+'%')).all()
         return music_name[0:7]
+
+    def get_music_by_musician_id(self, id_li):
+        if id_li == []:
+            return []
+        musics = []
+        for id in id_li:
+            musics += query(Music).filter(Music.musician_id == id).all()
+        return musics
 
     #根据id查询歌曲
     def get_music_by_id(self, id):
@@ -171,14 +180,15 @@ class MusicianService:
         musician = query(Musician).filter(Musician.id == id).order_by(Musician.id).one_or_none()
         return musician
 
-    def get_musician_by_name(self, name):
+    def get_musician_id_by_name(self, name):
         '''
         返回一个实例列表
         :param name:
         :return:
         '''
-        musician = query(Musician).filter(name in Musician.name).order_by(Musician.name).all()
+        musician = query(Musician.id).filter(Musician.name.like('%' + name + '%')).order_by(Musician.name).all()
         return musician
+
 
     def search_the_musicianname(self, name):
         '''
@@ -186,7 +196,7 @@ class MusicianService:
         :param name:
         :return:top 7 of the matched name
         '''
-        musician_names = query(Musician).filter(name in Musician.name).order_by(Musician.name).all()
+        musician_names = query(Musician).filter(Musician.name.like('%'+name+'%')).order_by(Musician.name).all()
         return musician_names[0:7]
 
     #修改图片
@@ -254,4 +264,4 @@ MusicianService = MusicianService()
 TagService = TagService()
 CollectService = CollectService()
 CommentService = CommentService()
-BillService = BillService()
+# BillService = BillService()

@@ -1349,48 +1349,36 @@
 						</li>
 
 						<li class="topCheck">
-							<a href="javascript:;" id="mymusic">VIP</a>
-
-						<li class="topCheck">
-							<a href="个人中心.html">个人中心</a>
+							<a href="{{ url_for('user', id=user.id) }}">个人中心</a>
 						</li>
 					</ul>
 					<div class="m_input">
-						<img src="../static/img/find.png" />
-						<input id="find" type="text" placeholder="音乐" autocomplete="off" />
+						<!--						<img src="./img/find.png" />-->
+						<form method="GET">
+
+							<input id="find" type="text" placeholder="音乐" name="search"/>
+							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="15" fill="currentColor" class="bi bi-search" viewBox="0 0 14 14">
+								<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+							</svg>
+							</input>
+						</form>
 					</div>
 
-					{% if session.get('username', 'guest') == 'guest' %}
+					{% if user == None %}
 					<a href="{{url_for('login')}}" class="m_login1" id="m_login1" title="点击跳转">登录</a>
 					{% else %}
-					<a href="{{url_for('user')}}" class="m_login1" id="m_login">{{username}}</a>
+					<a href="{{url_for('user', id=user.id)}}" class="m_login1" id="m_login">{{user.user_name}}</a>
 					{% endif %}
-					<a href="login.html" class="m_login2" id="m_login2">退出登录</a>
 
 				</div>
-				<div class="m_back">
-				</div>
-				<span id="spanTip"></span>
-				<ul class="menu2">
-					<li>
-						<a href="javascript:;" class="topItemCheck">专辑</a>
-					</li>
-					<li>
-						<a href="javascript:;" class="topItemCheck">排行榜</a>
-					</li>
-					<li>
-						<a href="javascript:;" class="topItemCheck">歌单</a>
-					</li>
-					<li>
-						<a href="javascript:;" class="topItemCheck">歌手</a>
-					</li>
-				</ul>
+				<div class="m_back"> </div>
 			</div>
 
 
 
-<!--Add in there-->
+			{% block main %}
 
+			{% endblock %}
 
 
 			<div id="head">

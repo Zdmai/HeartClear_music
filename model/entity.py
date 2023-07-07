@@ -7,12 +7,11 @@ class User(db.Model):
     user_email = db.Column(db.String(50), nullable=False)
     user_name = db.Column(db.String(100))       #昵称
     password = db.Column(db.String(20))
-    user_picture = db.Column(db.String(30), default='../static/img/user.jpg')
     user_gender = db.Column(db.String(1), default="O")            #M , F or O:other 未知
     user_signature = db.Column(db.String(200), default="这家伙很懒")   #个性签名
 
-    vip = db.Column(db.Integer, default=0)       #vip
-    total_cost = db.Column(db.Integer, default=0)#一共冲了多少
+    # vip = db.Column(db.Integer, default=0)       #vip
+    # total_cost = db.Column(db.Integer, default=0)#一共冲了多少
 
     bill = db.relationship('Bill', backref='User')
     user_log = db.relationship('User_log', backref='User')
@@ -26,7 +25,7 @@ class Music(db.Model):
     lyric = db.Column(db.Text)
     album_name = db.Column(db.String(20))
     musician_id = db.Column(db.Integer, db.ForeignKey('music.id'))
-    vip = db.Column(db.Integer, default=0)
+    #vip = db.Column(db.Integer, default=0)
 
     user_log = db.relationship('User_log', backref='Music')
     recommendation = db.relationship('Recommendation', backref='Music')
@@ -44,12 +43,12 @@ class Tag(db.Model):
     tag_name = db.Column(db.String(50), nullable=False)
     music_id = db.Column(db.Integer, db.ForeignKey('music.id'))
 
-class Bill(db.Model):
-    __tablename__ = 'bill'
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    bill_date = db.Column(db.DateTime, default=func.now())
-    transaction_amount = db.Column(db.Integer, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+# class Bill(db.Model):
+#     __tablename__ = 'bill'
+#     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+#     bill_date = db.Column(db.DateTime, default=func.now())
+#     transaction_amount = db.Column(db.Integer, nullable=False)
+#     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 class Comment(db.Model):
     __tablename__ = 'comment'

@@ -24,20 +24,52 @@ def profile():
 
 
 
-@app.route('/user/<id>')
+@app.route('/search/<text>')
+def search(text):
+    musics = MusicService.get_music_by_name(text)
+    user_id = session.get('user_id')
+    one = UserService.get_user_by_id(user_id)
+    musics += MusicService.get_music_by_musician_id(MusicianService.get_musician_id_by_name(text))
+    return render_template('search.html', musics=musics, user=one)
+
+
+@app.route('/user/show/<id>')
 def user(id):
     one = UserService.get_user_by_id(id)
-    return render_template('person_show1.html', user=one)
+    return render_template('person_show.html', user=one)
+
+
+@app.route('/user/modify/<id>')
+def modify(id):
+    one = UserService.get_user_by_id(id)
+    if request.method == "POST":
+        sex = request.form.get('sex')
+        name = request.form.get('username')
+        sign = request.fotm.get('user_signature')
+        picture = request.form.get('picture')
+        print(type(picture), '---------here----------', picture)
+        UserService.user_modify(id, sex, name, sign, picture)
+        return redirect(url_for('uer_home', id=id))
+    return render_template('user_modify.html', user=one)
+
+
+@app.route('/user/home/<id>')
+def user_home(id):
+    one = UserService.get_user_by_id(id)
+    return render_template('person_home.html', user=one)
 
 @app.route('/', methods = ['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 def index():
+    #session['user_id'] = 5
     user_id = session.get('user_id')
+    one = UserService.get_user_by_id(user_id)
+    search = request.args.get('search')
+    if search:
+        return redirect(url_for('search', text=search))
+    print(search)
+    return render_template('index.html', user=one)
 
-    username = session.get('username', "guest")
-    if username != 'guest':
-        username = username.split('@')[0]
-    return render_template('index.html')
 
 
 @app.route('/sign_up')
@@ -58,6 +90,7 @@ def sign_up():
         return redirect(url_for('index'))
     return render_template('sign_up.html')
 
+
 #用户登录逻辑
 @app.route('/login', methods=['POST', 'GET'])
 def login():
@@ -65,10 +98,9 @@ def login():
     if request.method == 'POST':
         useremail = request.form.get('useremail', 'Guest')
         password = request.form.get('password', None)
-        print(useremail)
-        user = UserService.get_user_by_email(useremail)
+        user = UserService.get_user_id_by_email(useremail)
         if user:
-            flash('Welcome HeartClearMusic!')
+            flash('Welcome to HeartClearMusic!')
         else:
             flash('There is something error!')
             return redirect(url_for('sign_up'))
@@ -76,7 +108,7 @@ def login():
         # resp.set_cookie('username', request.form['username'])
         session['useremail'] = useremail
         session['id'] = user.id
-        return render_template((url_for('index')))
+        return redirect((url_for('index')))
     print(request.args)
     print(request.form)
     return render_template('login.html', error=error)
@@ -94,21 +126,52 @@ def page_not_found(error):
     return resp
 
 
-@app.route('/song')
-def song():
-    return render_template('detail.html')
+@app.route('/song/<id>')
+def song(id):
+    music = MusicService.get_music_by_id(id)
+    return render_template('detail.html', music=music)
+
+
+@app.route('/user/forget')
+def forget():
+    if request.method == 'POST':
+        password1 = request.form.get('password1')
+        password2 = request.form.get('password2')
+        print(password2, password1)
+        if password1 != password2:
+            flash("密码不一致")
+            return render_template('forget.html')
+        else:
+            id = session.get('user_id')
+            one = UserService.get_user_by_id(id)
+            one.password = password1
+            db.session.commit()
+            return redirect(url_for(index))
+    return render_template("forget.html")
+
+
+@app.route('/succeed')
+def succeed():
+    return "Succeed!"
+
 
 #------------------------------------------
 
+# @app.cli.command()
+# def modify():
+#     id = '2'
+#     one = UserService.get_user_by_id(id)
+#     one.user_picture = '../static/img/2.jpg'
+#     UserService.user_modify(one)
 
 @app.cli.command()
-def create():
+def create1():
     user = User()
-    user.user_email = "2580324258@qq.com"
+    user.user_email = "test@qq.com"
     user.user_gender = "M"
-    user.user_picture = "./static/img/happydog.jpg"
+    user.user_picture = "../static/img/happy_dog.jpg"
     user.password = '12345'
-    user.id = 1
+    user.id = 5
     db.session.add(user)
     db.session.commit()
 
@@ -116,12 +179,12 @@ def create():
 @app.cli.command()
 def create():
 
-    bill = Bill()
-    bill.id = 1
-    bill.bill_date = "2023.2.23"
-    bill.transaction_amount = 30
-    bill.user_id = 1
-    db.session.add(bill)
+    # bill = Bill()
+    # bill.id = 1
+    # bill.bill_date = "2023.2.23"
+    # bill.transaction_amount = 30
+    # bill.user_id = 1
+    # db.session.add(bill)
 
     music = Music()
     music.id = 1
@@ -231,20 +294,20 @@ def ycj():
     print(UserService.get_user_by_id('1').total_cost)
 
 
-@app.cli.command()
-def bill():
-    print(BillService.get_bills(id='1')[0].transaction_amount)
+# @app.cli.command()
+# def bill():
+#     print(BillService.get_bills(id='1')[0].transaction_amount)
+#
 
-
-@app.cli.command()
-def bill1():
-    print(BillService.get_bills(id='1')[0].user_id)
-
-
-@app.cli.command()
-def bill2():
-    print(BillService.get_bills(id='1')[0].bill_date)
-
+# @app.cli.command()
+# def bill1():
+#     print(BillService.get_bills(id='1')[0].user_id)
+#
+#
+# @app.cli.command()
+# def bill2():
+#     print(BillService.get_bills(id='1')[0].bill_date)
+#
 
 @app.cli.command()
 def zzx1():
