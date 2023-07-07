@@ -155,6 +155,24 @@ def succeed():
     return "Succeed!"
 
 
+if __name__ == '__main__':
+    app.debug = True
+    app.run(host='0.0.0.0', port='5020')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #------------------------------------------
 
 # @app.cli.command()
@@ -169,9 +187,9 @@ def create1():
     user = User()
     user.user_email = "test@qq.com"
     user.user_gender = "M"
-    user.user_picture = "../static/img/happy_dog.jpg"
+    user.user_picture = "./img/user/happy_dog.jpg"
     user.password = '12345'
-    user.id = 5
+    user.id = 1
     db.session.add(user)
     db.session.commit()
 
@@ -351,10 +369,3 @@ def yyy1():
 
 
 #------------------------------------------
-
-
-
-if __name__ == '__main__':
-    app.debug = True
-    app.run(host='0.0.0.0', port='5020')
-

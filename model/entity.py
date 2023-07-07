@@ -13,7 +13,6 @@ class User(db.Model):
     # vip = db.Column(db.Integer, default=0)       #vip
     # total_cost = db.Column(db.Integer, default=0)#一共冲了多少
 
-    bill = db.relationship('Bill', backref='User')
     user_log = db.relationship('User_log', backref='User')
     recommendation = db.relationship('Recommendation', backref='User')
     collection = db.relationship("Collect", backref='User')
