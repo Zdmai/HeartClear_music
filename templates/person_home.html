@@ -5,15 +5,15 @@
     <title>个人自序</title>
     <meta name="theme-color" content="#ffc91d"/>
     <link rel="icon" href="./img/favicon.ico" />
-    <link href="./css/kico.css" rel="stylesheet" type="text/css"/>
-    <link href="./css/paul.css" rel="stylesheet" type="text/css"/>
+    <link href="{{ url_for('static', filename='/css/kico.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ url_for('static', filename='/css/paul.css') }}" rel="stylesheet" type="text/css"/>
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
     <meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1"/>
 </head>
 <body>
 <aside class="sidebar">
     <div class="avatar">
-        <img src="./img/{{ user.id }}.jpg" title="{{user.user_nmae}}"/>
+        <img src="{{ url_for('static', filename=user.picture) }}" title="{{user.user_nmae}}"/>
     </div>
     <nav class="nav">
         <a href="{{ url_for('index', user=user) }}">首页</a>
@@ -47,8 +47,39 @@
     </section>
 </main>
 
-<script src="./js/kico.js"></script>
-<script src="./js/paul.js"></script>
+<div style="margin-left: 20%">
+    <table style="width: 100%;">
+        <tr style="margin-left: 0px">
+            <td style="width: 33%;">&nbsp;歌曲</td>
+            <td>歌手</td>
+            <td>专辑</td>
+        </tr>
+    </table>
+</div>
+{% if musics != None %}
+<ul style="margin-left: 20%">
+    {% for music in musics %}
+    <li>
+        <table>
+            <tr>
+                <td style="width: 30%;">
+                    {{ music['music_name'] }}
+                </td>
+                <td style="width: 30%">
+                    {{ music['musician_name'] }}
+                </td>
+                <td style="width: 30%">
+                    {{ music['album'] }}
+                </td>
+            </tr>
+        </table>
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<script src="{{ url_for('static', filename='/js/kico.js') }}"></script>
+<script src="{{ url_for('static', filename='/js/paul.js') }}"></script>
 <!-- 网易云音乐 -->
 <embed frameborder="no" border="0" marginwidth="0" marginheight="0" width=0 height=0 src="//music.163.com/outchain/player?type=0&id=4950890732&auto=1&height=0"></embed>
 </body>

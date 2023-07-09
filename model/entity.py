@@ -8,6 +8,7 @@ class User(db.Model):
     user_name = db.Column(db.String(100))       #昵称
     password = db.Column(db.String(20))
     user_gender = db.Column(db.String(1), default="O")            #M , F or O:other 未知
+    picture = db.Column(db.String(100), default="/img/user/0.jpg")
     user_signature = db.Column(db.String(200), default="这家伙很懒")   #个性签名
 
     # vip = db.Column(db.Integer, default=0)       #vip
@@ -20,10 +21,11 @@ class User(db.Model):
 class Music(db.Model):
     __tablename__ = 'music'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    music_name = db.Column(db.String(50), nullable=False)
+    music_name = db.Column(db.String(100), nullable=False)
     lyric = db.Column(db.Text)
-    album_name = db.Column(db.String(20))
-    musician_id = db.Column(db.Integer, db.ForeignKey('music.id'))
+    album_name = db.Column(db.String(200))
+    picture = db.Column(db.String(100))
+    musician_id = db.Column(db.Integer)
     #vip = db.Column(db.Integer, default=0)
 
     user_log = db.relationship('User_log', backref='Music')

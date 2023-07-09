@@ -4,15 +4,31 @@ from flask import Flask, request, session, g, redirect, url_for, \
 from DB import db, query
 from model.entity import *
 from service.service import *
+import pandas as pd
+from ItemCF import recommend_music
+import random
+
 
 
 app = Flask(__name__, static_url_path='/')
 app.secret_key = b'_djflajeoflaj'
 app.config.from_pyfile('config.py')
 
+
 db.app = app
 db.init_app(app=app)
 
+
+@app.route('/add/<id>')
+def add_music(id):
+    user_id = session.get('user_id')
+    if user_id:
+        CollectService.add_music(user_id=user_id, music_id=id)
+        print('add succeed')
+        return redirect(url_for('song', id=id))
+    else:
+        return redirect(url_for('login'))
+    return redirect(url_for('song', id=id))
 
 
 
@@ -26,11 +42,17 @@ def profile():
 
 @app.route('/search/<text>')
 def search(text):
-    musics = MusicService.get_music_by_name(text)
     user_id = session.get('user_id')
     one = UserService.get_user_by_id(user_id)
-    musics += MusicService.get_music_by_musician_id(MusicianService.get_musician_id_by_name(text))
-    return render_template('search.html', musics=musics, user=one)
+    musics = MusicService.get_music_by_name(text)
+    u = MusicianService.get_musician_id_by_name(text)
+    musics += MusicService.get_music_by_musician_id(u)
+    print('\n========================\n', u)
+    many = []
+    for i in musics:
+        many += [MusicService.get_all_by_id(i.id)]
+        print(many)
+    return render_template('search.html', musics=many, user=one)
 
 
 @app.route('/user/show/<id>')
@@ -45,8 +67,9 @@ def modify(id):
     if request.method == "POST":
         sex = request.form.get('sex')
         name = request.form.get('username')
-        sign = request.fotm.get('user_signature')
-        picture = request.form.get('picture')
+        sign = request.form.get('user_signature')
+        picture = request.files.get('picture')
+        picture.save('../static/img/user/' + one.id + '.jpg')
         print(type(picture), '---------here----------', picture)
         UserService.user_modify(id, sex, name, sign, picture)
         return redirect(url_for('uer_home', id=id))
@@ -56,38 +79,63 @@ def modify(id):
 @app.route('/user/home/<id>')
 def user_home(id):
     one = UserService.get_user_by_id(id)
-    return render_template('person_home.html', user=one)
+    musics = CollectService.get_collection_by_userid(id)
+    return render_template('person_home.html', user=one, musics=musics)
 
 @app.route('/', methods = ['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 def index():
-    #session['user_id'] = 5
     user_id = session.get('user_id')
     one = UserService.get_user_by_id(user_id)
+    collection = CollectService.get_collection_by_userid(user_id)
+    print('\\\\\\\\\\\\\\\\\\\\\\', collection)
     search = request.args.get('search')
     if search:
         return redirect(url_for('search', text=search))
-    print(search)
-    return render_template('index.html', user=one)
 
-
-
-@app.route('/sign_up')
-def sign_up():
-    useremail = request.form.get('useremail', 'Guest@mail.com')
-    # if '@' not in useremail:
-    #     return sign_up()
-    password = request.form.get('passward')
-    one = UserService.get_user_by_email(useremail)
-    if one:
-        flash("This email have signed up!")
+    id = user_id
+    N = 5
+    recoms = recommend_music()
+    if id not in recoms.keys():
+        id=list(recoms.keys())[0]
+    li = recoms.get(id)
+    len_li = len(li)
+    if len_li < 10:
+        print("/////////////////", li)
+        recoms = list(recoms.get(id)) + random.choices(MusicService.get_all(), k = N - len_li)
     else:
-        user = User(user_email=useremail, user_name=useremail.split('@')[0], password=password)
-        print(user)
-        db.session.add(user)
-        db.session.commit()
-        session['user_id'] = UserService.get_user_id_by_email(useremail)
-        return redirect(url_for('index'))
+        recoms = li
+    print('!!!!!!!!!!!!!!!!!!!!!!!!!', recoms)
+    lst = []
+    for i in recoms:
+        if isinstance(i, int):
+            lst += [MusicService.get_music_by_id(i)]
+        else:
+            lst += [MusicService.get_music_by_id(i[0])]
+    print(lst)
+    return render_template('index.html', user=one, collection=collection, li=lst)
+
+
+
+@app.route('/sign_up', methods=["GET", "POST"])
+def sign_up():
+    if request.method =='POST':
+        useremail = request.form.get('useremail', 'Guest@mail.com')
+        password = request.form.get('passward')
+        username = request.form.get('username')
+        one = UserService.get_user_by_email(useremail)
+        if one:
+            flash("This email have signed up!")
+            return redirect(url_for("login"))
+        elif useremail != "Guest@mail.com" and password != '':
+            user = User(user_email=useremail, user_name=username, password=password)
+            db.session.add(user)
+            db.session.commit()
+            session['user_id'] = UserService.get_user_id_by_email(useremail).id
+            print(session.get('user_id'))
+            return redirect(url_for('index'))
+        else:
+            return redirect(url_for('sign_up'))
     return render_template('sign_up.html')
 
 
@@ -96,18 +144,21 @@ def sign_up():
 def login():
     error = None
     if request.method == 'POST':
-        useremail = request.form.get('useremail', 'Guest')
-        password = request.form.get('password', None)
-        user = UserService.get_user_id_by_email(useremail)
+        useremail = request.form.get('useremail')
+        password = request.form.get('password')
+        user = UserService.get_user_by_email(useremail)
         if user:
-            flash('Welcome to HeartClearMusic!')
+            if user.password == password:
+                flash('Welcome to HeartClearMusic!')
+            else:
+                flash('Password error!')
+                return redirect(url_for('login'))
         else:
-            flash('There is something error!')
+            flash('There is something error! Please sign up first')
             return redirect(url_for('sign_up'))
         #if username在数据库中，登入成功
         # resp.set_cookie('username', request.form['username'])
-        session['useremail'] = useremail
-        session['id'] = user.id
+        session['user_id'] = user.id
         return redirect((url_for('index')))
     print(request.args)
     print(request.form)
@@ -126,11 +177,56 @@ def page_not_found(error):
     return resp
 
 
-@app.route('/song/<id>')
-def song(id):
-    music = MusicService.get_music_by_id(id)
-    return render_template('detail.html', music=music)
+@app.route('/recommend/<id>', methods=["GET", "POST"])
+def recommend(id):
+    N = 20
+    one = UserService.get_user_by_id(id)
+    recoms = recommend_music()
+    if id not in recoms.keys():
+        id=list(recoms.keys())[0]
+    li = recoms.get(id)
+    len_li = len(li)
+    if len_li < 10:
+        print("/////////////////", li)
+        recoms = list(recoms.get(id)) + random.choices(MusicService.get_all(), k = N - len_li)
+    else:
+        recoms = li
+    print('!!!!!!!!!!!!!!!!!!!!!!!!!', recoms)
+    lst = []
+    for i in recoms:
+        if isinstance(i, int):
+            lst += [MusicService.get_music_by_id(i)]
+        else:
+            lst += [MusicService.get_music_by_id(i[0])]
+    search = request.args.get('search')
+    search = request.args.get('search')
+    if search:
+        return redirect(url_for('search', text=search))
+    return render_template('album.html', user=one, li=lst)
 
+
+@app.route('/song/<id>', methods=['GET', 'POST'])
+def song(id):
+    one = UserService.get_user_by_id(session.get('user_id'))
+    music = MusicService.get_all_by_id(id)
+    print(music)
+    if request.method=="POST":
+        print("add")
+    search = request.args.get('search')
+    search = request.args.get('search')
+    if search:
+        return redirect(url_for('search', text=search))
+    return render_template('detail.html', user=one, music=music)
+
+# @app.route('/album_list')
+# def album_list():
+#
+#     return render_template('album_list.html', user=user)
+
+# @app.route('/album/<name>')
+# def album(name):
+#     musics = MusicService.get_music_by_albmu_name(name)
+#     return render_template('album_detail.html', user=user, musics=musics)
 
 @app.route('/user/forget')
 def forget():
@@ -146,7 +242,7 @@ def forget():
             one = UserService.get_user_by_id(id)
             one.password = password1
             db.session.commit()
-            return redirect(url_for(index))
+            return redirect(url_for('index'))
     return render_template("forget.html")
 
 
@@ -176,20 +272,35 @@ if __name__ == '__main__':
 #------------------------------------------
 
 # @app.cli.command()
-# def modify():
-#     id = '2'
-#     one = UserService.get_user_by_id(id)
-#     one.user_picture = '../static/img/2.jpg'
-#     UserService.user_modify(one)
+# def importdata():
+#     a = pd.read_csv('./musician.csv', delimiter=';')
+#     for i in range(len(a['musician_name'])):
+#         musician = Musician(id = a['musician_id'][i], name=a['musician_name'][i])
+#         db.session.add(musician)
+#         db.session.commit()
+# @app.cli.command()
+# def importdata1():
+#     a = pd.read_csv('./tag.csv')
+
+@app.cli.command()
+def collect():
+    li = ['63570', '66823', '365661004', '108795', '165339', '186421']
+    for i in li:
+        col = Collect()
+        print(i)
+        col.user_id = 1
+        col.music_id = i
+        db.session.add(col)
+        db.session.commit()
 
 @app.cli.command()
 def create1():
     user = User()
     user.user_email = "test@qq.com"
     user.user_gender = "M"
-    user.user_picture = "./img/user/happy_dog.jpg"
     user.password = '12345'
     user.id = 1
+    user.user_name = 'test'
     db.session.add(user)
     db.session.commit()
 
@@ -197,6 +308,11 @@ def create1():
 @app.cli.command()
 def create():
 
+    musician = Musician()
+    musician.id = 1
+    musician.name = "许嵩"
+    db.session.add(musician)
+    db.session.commit()
     # bill = Bill()
     # bill.id = 1
     # bill.bill_date = "2023.2.23"
@@ -205,18 +321,31 @@ def create():
     # db.session.add(bill)
 
     music = Music()
-    music.id = 1
     music.music_name = "许嵩"
-    music.lyric = "巴拉巴拉巴拉"
+    music.lyric = '''
+    djlfj
+    浪费空间扫放假啊开始减肥了卡睡觉了
+    【撒‘姜i家啊大家
+    啊好’姜阿水；姜安静；姜
+    安静安静k啊‘阿萨德看啊jasj'asokas’hands
+    a
+     '''
     music.album_name = "卡拉芭比大海"
+    music.picture = '/img/music/xr.jpg'
+    music.musician_id = 1
+    db.session.add(music)
+    music=Music()
+    music.music_name = "许江东父老就阿拉丁"
+    music.lyric = '''
+    啊好 姜阿水；姜安静；姜
+    安静安静k啊‘阿萨德看啊 hands
+     '''
+    music.album_name = "大海"
     music.vip = 9
+    music.picture = '/img/music/xr.jpg'
     music.musician_id = 1
     db.session.add(music)
 
-    musician = Musician()
-    musician.id = 1
-    musician.name = "许嵩"
-    db.session.add(musician)
 
     collect = Collect()
     collect.id = 2
@@ -274,97 +403,6 @@ def insdb():
     user.password = 'zzz'
     db.session.add(user)
     db.session.commit()
-
-
-
-@app.cli.command()
-def get():
-    print(UserService.get_user_by_id('1').user_email)
-
-
-@app.cli.command()
-def zx():
-    print(UserService.get_user_by_id('1').password)
-
-
-@app.cli.command()
-def cv():
-    print(UserService.get_user_by_id('1').user_picture)
-
-
-@app.cli.command()
-def cxk():
-    print(UserService.get_user_by_id('1').user_gender)
-
-
-@app.cli.command()
-def cll():
-    print(UserService.get_user_by_id('1').user_signature)
-
-
-@app.cli.command()
-def fcc():
-    print(UserService.get_user_by_id('1').vip)
-
-
-@app.cli.command()
-def ycj():
-    print(UserService.get_user_by_id('1').total_cost)
-
-
-# @app.cli.command()
-# def bill():
-#     print(BillService.get_bills(id='1')[0].transaction_amount)
-#
-
-# @app.cli.command()
-# def bill1():
-#     print(BillService.get_bills(id='1')[0].user_id)
-#
-#
-# @app.cli.command()
-# def bill2():
-#     print(BillService.get_bills(id='1')[0].bill_date)
-#
-
-@app.cli.command()
-def zzx1():
-    print(MusicService.get_music_by_id(1).album_name)
-
-
-@app.cli.command()
-def zzx2():
-    print(MusicService.get_music_by_id(1).music_name)
-
-
-@app.cli.command()
-def zzx3():
-    print(MusicService.get_music_by_id(1).music_name)
-
-
-@app.cli.command()
-def zzx4():
-    print(MusicService.get_music_by_id(1).lyric)
-
-
-@app.cli.command()
-def zzx5():
-    print(MusicService.get_music_by_id(1).vip)
-
-
-@app.cli.command()
-def zzx6():
-    print(MusicService.get_music_by_id(1).musician_id)
-
-
-@app.cli.command()
-def zzz1():
-    print(MusicianService.get_musician_by_id('1')[0].name)
-
-
-@app.cli.command()
-def yyy1():
-    print(TagService.get_music_tag('1')[0].tag_name)
 
 
 

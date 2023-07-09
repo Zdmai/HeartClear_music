@@ -26,7 +26,7 @@
 		}
 	</style>
 	<body background="../static/img/4444.png"style="margin:0 auto;text-align: center;padding-top: 100px;">
-		<form action="POST" style="margin:0 auto;text-align: center;">
+		<form action="POST">
 			<p>
 				信息修改
 			</p>
@@ -34,9 +34,7 @@
 			<p>
 				<span>个性签名：</span>
 				<br>
-						<textarea class="text1" name="user_signature">
-							个性签名！
-						</textarea>
+					<textarea class="text1" name="user_signature"></textarea>
 			</p>
 			<p>性别：男<input type="radio" name="sex" value="男" checked>
 					女<input type="radio" name="sex" value="女" checked>
@@ -44,12 +42,13 @@
 
 					<p class="head1">
 						<span>头像更改:</span>
-						<input type="file" name="picture">
+						<input type="file" name="picture" enctype=“multipart/form-data”>
 					</p>
 					<div class="head2">
 						<input type="submit" value="保存">
 					</div>
-			
+		</form>
+
 			<img src="../static/img/logopic.png" style="width:200px;height:200px;position:relative;left:-370px;top:-180px;">
 			<div style="position:relative;left:0px;top:0px;background-color:#b01e1e;width:100%;height:200px;">
 			<tr>
@@ -59,6 +58,5 @@
 				</td>
 			</tr>
 			</div>
-		</form>
 	</body>
 </html>

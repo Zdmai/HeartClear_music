@@ -674,7 +674,7 @@
 			.remen,
 			.gexing,
 			.paihang,
-			.song_list {
+			.gedan {
 				width: 70%;
 				margin: 0 auto;
 				background: #fff;
@@ -1356,15 +1356,13 @@
 						</li>
 					</ul>
 					<div class="m_input">
-						<img src="../static/img/find.png" />
+						<!-- <img src="./img/find.png" /> -->
+						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="15" fill="currentColor" class="bi bi-search" viewBox="0 0 14 14">
+							<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+						  </svg>
 						<input id="find" type="text" placeholder="音乐" autocomplete="off" />
 					</div>
-
-					{% if session.get('username', 'guest') == 'guest' %}
-					<a href="{{url_for('login')}}" class="m_login1" id="m_login1" title="点击跳转">登录</a>
-					{% else %}
-					<a href="{{url_for('user')}}" class="m_login1" id="m_login">{{username}}</a>
-					{% endif %}
+					<a href="login.html" class="m_login" id="m_login" title="点击跳转">登录</a>
 					<a href="login.html" class="m_login2" id="m_login2">退出登录</a>
 
 				</div>
@@ -1386,197 +1384,193 @@
 					</li>
 				</ul>
 			</div>
+			<div id="content">
+				<!-- 轮播动画 -->
+				<div class="con_banner">
+					<div id="playBox" class="play-box">
+						<!--图片列表-->
+						<div id="imgList">
+							<img class="current" src="img/轮播/t1.jpg" />
+							<img src="img/轮播/t2.jpg" />
+							<img src="img/轮播/t3.jpg" />
+							<img src="img/轮播/t4.jpg" />
+							<img src="img/轮播/t5.jpg" />
+						</div>
+						<!--图标列表-->
+						<div class="iconList">
+							<ul id="iconul">
+								<li class="current current2">1</li>
+								<li class="current2">2</li>
+								<li class="current2">3</li>
+								<li class="current2">4</li>
+								<li class="current2">5</li>
+							</ul>
+						</div>
+						<!--左箭头-->
+						<div class="sliderbar slidebar-left" id="sliderbarl">&lt;</div>
+						<!--右箭头-->
+						<div class="sliderbar slidebar-right" id="sliderbarr">&gt;</div>
+					</div>
+				</div>
+			</div>
 
 
-
-<!--Add in there-->
-			<div class="container">
-        <!-- 在此处插入你的其他页面内容 -->
-
-        <div class="buttons">
-            <button type="button" class="btn btn-primary btn-lg">VIP免费听</button>
-            <button type="button" class="btn btn-primary btn-lg">收藏</button>
-        </div>
-    </div>
-			<div class="col-md-7 col-lg-8">
-          <div class="row featurette">
-              <div class="col-md-7 order-md-2">
-                <ul class="nav">
-                  <li class="nav-item">
-                    <a class="nav-link disabled">歌名:</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">歌曲名字</a>
-                  </li>
-                </ul>
-                <ul class="nav">
-                  <li class="nav-item">
-                    <a class="nav-link disabled">歌手:</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">歌手名字</a>
-                  </li>
-                </ul>
-                <ul class="nav">
-                  <li class="nav-item">
-                    <a class="nav-link disabled">专辑:</a>
-                  </li>
-                  <li class="nav-item"><!--需要优化-->
-                    <a class="nav-link active" aria-current="page" href="#">专辑名字</a>
-                  </li>
-              </div>
-              <div class="col-md-5 order-md-1">
-                <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#eee"></rect>
-                  <image xlink:href="image/img.png " width="140%" height="100%"></image>
-                </svg>
-              </div>
-          </div>
-          <div class="container-fluid py-5">
-            <h5>歌词</h5>
-            <p class="fs-6">故事的小黄花
-从出生那年就飘着
-童年的荡秋千
-随记忆一直晃到现在
-Re So So Si Do Si La
-So La Si Si Si Si La Si La So
-吹着前奏 望着天空
-我想起花瓣试着掉落
-为你翘课的那一天
-花落的那一天
-教室的那一间
-我怎么看不见
-消失的下雨天
-我好想再淋一遍
-没想到 失去的勇气我还留着
-好想再问一遍
-你会等待还是离开
-刮风这天 我试过握着你手
-但偏偏 雨渐渐
-大到我看你不见
-还要多久 我才能在你身边
-等到放晴的那天
-也许我会比较好一点
-从前从前 有个人爱你很久
-但偏偏 风渐渐
-把距离吹得好远
-好不容易 又能再多爱一天
-但故事的最后
-你好像还是说了 拜拜
-为你翘课的那一天
-花落的那一天
-教室的那一间
-我怎么看不见
-消失的下雨天
-我好想再淋一遍
-没想到 失去的勇气我还留着
-好想再问一遍
-你会等待还是离开
-刮风这天 我试过握着你手
-但偏偏 雨渐渐
-大到我看你不见
-还要多久 我才能在你身边
-等到放晴的那天
-也许我会比较好一点
-从前从前 有个人爱你很久
-偏偏 风渐渐
-把距离吹得好远
-好不容易 又能再多爱一天
-但故事的最后
-你好像还是说了 拜拜
-刮风这天 我试过握着你手
-但偏偏 雨渐渐
-大到我看你不见
-还要多久 我才能够在你身边
-等到放晴那天
-也许我会比较好一点
-从前从前 有个人爱你很久
-但偏偏 雨渐渐
-把距离吹得好远
-好不容易 又能再多爱一天
-但故事的最后
-你好像还是说了拜
-            </p>
-          </div>
-          <div class="container-fluid mb-3">
-            <h5>歌曲评论</h5>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-          </div>
-          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <button class="btn btn-primary me-md-2" type="button">发表</button>
-          </div>
-
-          <div class="row mb-2">
-            <div class="col-md-6">
-            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-
-              <div class="col p-4 d-flex flex-column position-static">
-                <ul class="nav">
-                </ul>
-                <div class="nav-scroller py-1 mb-2">
-                  <ul class="nav">
-                    <li class="nav-item">
-                      <a class="nav-link active" aria-current="page" href="#">用户名</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link disabled">评论</a>
-                    </li>
-                  </ul>
-                    <ul class="nav">
-                    <li class="nav-item">
-                      <a class="nav-link active" aria-current="page" href="#">用户名</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link disabled">评论</a>
-                    </li>
-                  </ul>
-                    <ul class="nav">
-                    <li class="nav-item">
-                      <a class="nav-link active" aria-current="page" href="#">用户名</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link disabled">评论</a>
-                    </li>
-                  </ul>
-
-            </div>
-
-              </div>
-            </div>
-            </div>
-          </div>
-        </div>
-
-
-
+			<div class=" middiv">
+				<div class="remen">
+					<p class="title">
+						<img src="./img/爱心.png" />
+						<span class="t-span">
+							我喜欢
+						</span>
+						<span class="con_gengduo">
+							<a href="javascript:;">更多>></a>
+						</span>
+					</p>
+					<table>
+						<thead>
+							<tr>
+								<th>歌名</th>
+								<th>歌手</th>
+								<th>类型</th>
+								<th>专辑</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div>
+				<div class="remen">
+					<p class="title">
+						<img src="./img/唱片.png" />
+						<span class="t-span">
+							热门推荐
+							<span class="con_type">
+								<a href="#">华语</a> |
+								<a href="#">流行</a> |
+								<a href="#">摇滚</a> |
+								<a href="#">民谣</a>
+							</span>
+						</span>
+						<span class="con_gengduo">
+							<a href="javascript:;">更多>></a>
+						</span>
+					</p>
+					<ul class="ul_list">
+						<li class="lisong">
+							<div>
+								<a href="javascript:;">
+									<img src="img/l.jpg" />
+								</a>
+							</div>
+							<a href="javascript:;">London Boy</a>
+						</li>
+						<li class="lisong">
+							<div>
+								<a href="javascript:;">
+									<img src="img/hdx.jpg" />
+								</a>
+							</div>
+							<a href="javascript:;">海の形</a>
+						</li>
+						<li class="lisong">
+							<div>
+								<a href="javascript:;">
+									<img src="img/xr.jpg" />
+								</a>
+							</div>
+							<a href="javascript:;">形容</a>
+						</li>
+						<li class="lisong">
+							<div>
+								<a href="javascript:;">
+									<img src="img/ssngsjzr.jpg" />
+								</a>
+							</div>
+							<a href="javascript:;">杀死那个石家庄人</a>
+						</li>
+					</ul>
+				</div>
+				<div class="gedan">
+					<p class="title">
+						<img src="./img/歌单.png" />
+						<span class="t-span">歌单</span>
+						<span class="con_gengduo">
+							<a href="javascript:;">更多>></a>
+						</span>
+					</p>
+					<ul class="ul_list">
+						<li>
+							<div>
+								<a href="javascript:;">
+									<img src="img/gedan/1.jpg" />
+								</a>
+							</div>
+							<a href="javascript:;">2022全网超好听热门流行歌曲推荐</a>
+						</li>
+						<li>
+							<div>
+								<a href="javascript:;">
+									<img src="img/gedan/2.jpg" />
+								</a>
+							</div>
+							<a href="javascript:;">祝有爱者更爱，无爱者自由</a>
+						</li>
+						<li>
+							<div>
+								<a href="javascript:;">
+									<img src="img/gedan/3.jpg" />
+								</a>
+							</div>
+							<a href="javascript:;">民谣复兴</a>
+						</li>
+						<li>
+							<div>
+								<a href="javascript:;">
+									<img src="img/gedan/4.jpg" />
+								</a>
+							</div>
+							<a href="javascript:;">说唱</a>
+						</li>
+						<li>
+							<div>
+								<a href="javascript:;">
+									<img src="img/gedan/5.jpg" />
+								</a>
+							</div>
+							<a href="javascript:;">日语</a>
+						</li>
+					</ul>
+				</div>
+			</div>
 			<div id="head">
-				<img src="../static/img/PlayMusic/up.png" />
 				<div id="wrap">
 					<audio id="music"></audio>
-						<!-- 修改 -->
+					<!-- 修改 -->
 					<span class="play_left">
 						<!-- <img src="./img/PlayMusic/last_1.png" class="t_20" id="up" /> -->
-						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="30" fill="white" id="up"  class="bi bi-caret-left t_20" viewBox="0 0 16 16">
+						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" id="up"  class="bi bi-caret-left t_20" viewBox="0 0 16 16">
 							<path d="M10 12.796V3.204L4.519 8 10 12.796zm-.659.753-5.48-4.796a1 1 0 0 1 0-1.506l5.48-4.796A1 1 0 0 1 11 3.204v9.592a1 1 0 0 1-1.659.753z"/>
 						  </svg>
 						<!-- <img src="./img/PlayMusic/play_1.png" class="t_30" id="p1" /> -->
-						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="40" fill="white" id="p1" class="bi bi-pause-circle t_30" viewBox="0 0 16 16">
+						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" id="p1" class="bi bi-pause-circle t_30" viewBox="0 0 16 16">
 							<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
 							<path d="M5 6.25a1.25 1.25 0 1 1 2.5 0v3.5a1.25 1.25 0 1 1-2.5 0v-3.5zm3.5 0a1.25 1.25 0 1 1 2.5 0v3.5a1.25 1.25 0 1 1-2.5 0v-3.5z"/>
 						  </svg>
 						<!-- <img src="./img/PlayMusic/stop_1.png" class="t_30" id="p2" /> -->
-						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="40" fill="white" id="p2" class="bi bi-play-circle t_30" viewBox="0 0 16 16">
+						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" id="p2" class="bi bi-play-circle t_30" viewBox="0 0 16 16">
 							<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
 							<path d="M6.271 5.055a.5.5 0 0 1 .52.038l3.5 2.5a.5.5 0 0 1 0 .814l-3.5 2.5A.5.5 0 0 1 6 10.5v-5a.5.5 0 0 1 .271-.445z"/>
 						  </svg>
 						<!-- <img src="img/PlayMusic/next_1.png" class="t_20" id="down" /> -->
-						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="30" fill="white" id="down" class="bi bi-caret-right t_20" viewBox="0 0 16 16">
+						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" id="down" class="bi bi-caret-right t_20" viewBox="0 0 16 16">
 							<path d="M6 12.796V3.204L11.481 8 6 12.796zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753z"/>
 						  </svg>
 					</span>
 					<!-- 修改 -->
 					<div class="SongInfo">
 						<a href="#">
-							<img src="../static/img/唱片.png" class="songImg" id="Imgsong" />
+							<img src="./img/唱片.png" class="songImg" id="Imgsong" />
 						</a>
 						<span class="song">
 							<a href="javascript:;" class="songname" id="songname">歌名</a>
@@ -1595,7 +1589,7 @@ So La Si Si Si Si La Si La So
 							<span class="totalTime" id="totalTime">00:00</span>
 						</span>
 					</div>
-
+                    <!-- 修改 -->
 					<span class="play_right">
 						<!-- <img src="./img/PlayMusic/音量_1.png" class="t_10 vol" /> -->
 						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" class="bi bi-volume-up t_10 vol" viewBox="0 0 16 16">
@@ -1621,10 +1615,10 @@ So La Si Si Si Si La Si La So
 							<path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
 							<path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
 						  </svg>
-						<img src="../static/img/PlayMusic/单曲循环.png" id="typep3" class="t_10 playOrder p3 notShow" alt="单曲循环" />
 						<div id="SongList">
 							<ul>
 								<li v-for="(item,index) in $store.state.songmenu" :key="index" @click="play(index)">
+									{{item.name}}--{{item.singer}}
 								</li>
 							</ul>
 						</div>
@@ -1632,7 +1626,9 @@ So La Si Si Si Si La Si La So
 						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white"  class="bi bi-list-ul t_10 list" viewBox="0 0 16 16">
 							<path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm-3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
 						  </svg>
+						 
 					</span>
+					<!-- 修改 -->
 				</div>
 			</div>
 			<div id="bottom">
